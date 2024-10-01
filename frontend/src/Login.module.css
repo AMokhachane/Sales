@@ -1,26 +1,123 @@
 .loginContainer {
-    display: flex;
-    height: 100vh;
+	display: flex;
+	height: 100vh;
+	background-color: #fff;
+  }
+  
+  .left {
+	width: 65%;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .Group {
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+  }
+  
+  .icon {
+	margin-right: 10px;
+	color: #2f4f4f;
+  }
+  
+  .inputField {
 	width: 100%;
-    background-color: #f5f0ef;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	font-size: 16px;
+  }
+  
+  .forgotPasswordAndButton {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Creates space between the two elements */
+    width: 65%; /* Adjust as per your layout */
+    margin-top: 20px; /* Space above this div */
+    margin-left: 150px; /* Adjust margin as per your layout */
+    gap: 20px; /* Adds space between the Forgot Password link and the Login button */
 }
 
-
-.boldText {
-    font-weight: bold;
-    margin-left: 30px; /* Adjust this value as needed */
-	color: green;
+.forgotPassword {
+    color: #20682b;
+    text-decoration: none;
+    position: absolute;
+    top: 63%; /* Adjust these values as per your layout */
+    left: 400px; /* Adjust horizontal positioning */
+    transform: translateY(-50%); /* To vertically center if needed */
 }
 
-.logo {
+.loginButton {
+    width: 104px;
+    height: 37px;
+    background-color: #20682b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+	margin-left: 200px;
+    justify-content: center; /* Centers text inside the button */
+}
+  
+  .loginButton:hover {
+	background-color: #56be75;
+  }
+  
+  .extraOptions {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 10px;
+	font-size: 14px;
+  }
+  
+  .rightSide {
+	width: 35%;
+	background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2); /* Three shades of green */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	color: white;
+	
+	/* To create a curved effect on the right side */
+	border-top-left-radius: 300px; 
+	border-bottom-left-radius: 0px;
+	
+	/* Optional: Add shadow to enhance the effect */
+	box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .welcomeSection {
+	text-align: center;
+  }
+  
+  .welcomeText {
+	font-size: 40px;
+	margin-bottom: 10px;
+  }
+  
+  .welcomeSubtext {
+	font-size: 18px;
+	margin-bottom: 20px;
+  }
+  
+  .signUpLink {
+	color: white;
+	text-decoration: underline;
+	cursor: pointer;
+	margin-right: 5px;
+  }
+
+  .logo {
     display: flex;
     align-items: center;
     margin-bottom: 50px; /* Space below the logo */
-	margin-left: 150px;
+	margin-left: 30px;
 }
 
 .logoSquare {
@@ -52,74 +149,4 @@
         width: 60px; /* Smaller icon */
         height: 60px; /* Smaller icon */
     }
-}
-.Group {
-    margin-bottom: 20px;
-    width: 100%;
-    margin-left: 150px;
-}
-
-.label {
-    display: block;
-    margin-bottom: 5px;
-    font: inter;
-}
-
-.inputField {
-    width: 409px;
-	height: 40px;
-    padding: 0px;
-    border: 1px solid #20682b;
-    border-radius: 5px;
-}
-
-.successMessage {
-    color: green;
-    margin-bottom: 10px;
-}
-
-.errorMessage {
-    color: red;
-    margin-bottom: 5px;
-}
-
-.forgotPasswordAndButton {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* This keeps items spaced apart */
-    width: 64%; /* Ensures full width of the container */
-    margin-top: 20px; /* Adds some space from the input fields */
-    margin-left: 150px;
-}
-
-.forgotPassword {
-    color: #20682b;
-    text-decoration: none;
-    margin-right: auto; /* Allows the link to push to the left */
-}
-
-.loginButton {
-    width: 104px; /* Set width to 104px */
-    height: 37px; /* Set height to 37px */
-    background-color: #20682b;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    flex-shrink: 0; /* Ensures the button doesn't shrink */
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centers text inside the button */
-    
-}
-
-.registerLink {
-    margin-top: 20px; /* Space from the login button */
-    font-size: 14px; /* Font size for the message */
-	margin-left: 150px;
-}
-
-.register {
-    color: #20682b; /* Register link color */
-    text-decoration: underline; /* Underline for emphasis */
 }
