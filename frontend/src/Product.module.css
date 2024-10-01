@@ -1,0 +1,56 @@
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #f9f9f9; /* Light background for freshness */
+  }
+  
+  h2 {
+	text-align: center;
+	color: #4CAF50; /* A fresh green color */
+	margin: 20px 0;
+  }
+  
+  h3 {
+	color: #333; /* Darker text for product names */
+	margin: 10px 0;
+  }
+  
+  .productList {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+	gap: 20px; /* Space between cards */
+	padding: 20px;
+	margin: 0 auto;
+	max-width: 1200px; /* Center the grid */
+  }
+  
+  .productCard {
+	background-color: white; /* White background for product cards */
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	overflow: hidden; /* Rounded corners for images */
+	transition: transform 0.2s; /* Animation for hover effect */
+  }
+  
+  .productCard:hover {
+	transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .productImage {
+	width: 100%; /* Full width for images */
+	height: 200px; /* Fixed height for images */
+	object-fit: cover; /* Cover to maintain aspect ratio */
+  }
+  
+  .categorySelect {
+	margin: 20px auto;
+	padding: 10px;
+	border: 2px solid #4CAF50; /* Green border */
+	border-radius: 5px;
+	background-color: #fff; /* White background for the dropdown */
+	font-size: 16px;
+	cursor: pointer;
+  }
+  
+  .categorySelect option {
+	padding: 10px; /* Space inside dropdown options */
+  }
