@@ -1,56 +1,120 @@
-body {
-	font-family: 'Arial', sans-serif;
-	background-color: #f9f9f9; /* Light background for freshness */
-  }
-  
-  h2 {
-	text-align: center;
-	color: #4CAF50; /* A fresh green color */
-	margin: 20px 0;
-  }
-  
-  h3 {
-	color: #333; /* Darker text for product names */
-	margin: 10px 0;
-  }
-  
-  .productList {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
-	gap: 20px; /* Space between cards */
-	padding: 20px;
-	margin: 0 auto;
-	max-width: 1200px; /* Center the grid */
-  }
-  
-  .productCard {
-	background-color: white; /* White background for product cards */
-	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	overflow: hidden; /* Rounded corners for images */
-	transition: transform 0.2s; /* Animation for hover effect */
-  }
-  
-  .productCard:hover {
-	transform: scale(1.05); /* Scale up on hover */
-  }
-  
-  .productImage {
-	width: 100%; /* Full width for images */
-	height: 200px; /* Fixed height for images */
-	object-fit: cover; /* Cover to maintain aspect ratio */
-  }
-  
-  .categorySelect {
-	margin: 20px auto;
-	padding: 10px;
-	border: 2px solid #4CAF50; /* Green border */
-	border-radius: 5px;
-	background-color: #fff; /* White background for the dropdown */
-	font-size: 16px;
-	cursor: pointer;
-  }
-  
-  .categorySelect option {
-	padding: 10px; /* Space inside dropdown options */
-  }
+.productContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #d8f3dc; /* Light background for the container */
+    height: 100vh; /* Cover the full height of the viewport */
+    justify-content: flex-start; /* Align content at the top */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.title {
+    font-size: 36px;
+    color: #2f4f4f; /* Match with your login page color */
+    margin-bottom: 20px;
+}
+
+.filterContainer {
+    margin-bottom: 20px;
+}
+
+.filterTitle {
+    font-size: 24px;
+    color: #20682b; /* Consistent with login page theme */
+    margin-bottom: 10px;
+}
+
+.categorySelect {
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 200px; /* Set a width for the select box */
+}
+
+.productList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns of equal width */
+    gap: 20px; /* Space between product cards */
+}
+
+.productCard {
+    background-color: #ffffff; /* Card background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px; /* Inner padding */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center the text */
+    height: 300px; /* Set a fixed height for uniformity */
+    display: flex; /* Use Flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: space-between; /* Space elements evenly */
+}
+
+.productImage {
+    max-width: 100%;
+    height: 150px; /* Set a fixed height for images */
+    border-radius: 10px; /* Rounded image corners */
+    object-fit: cover; /* Ensure the image covers the space without distortion */
+}
+
+.productName {
+    font-size: 20px;
+    color: #2f4f4f;
+    margin: 10px 0;
+}
+
+.productDescription {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px; /* Margin below description */
+}
+
+.productCategory {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px; /* Margin below category */
+}
+
+.productPrice {
+    font-weight: bold;
+    color: #4CAF50; /* Green color for sale price */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; /* Center the pagination controls */
+    margin-top: 20px; /* Space above pagination */
+}
+
+.pageButton {
+    margin: 0 5px; /* Space between buttons */
+    padding: 10px 15px; /* Button padding */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    background-color: #20682b; /* Background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+.pageButton:hover {
+    background-color: #4CAF50; /* Change background on hover */
+}
+
+.active {
+    background-color: #4CAF50; /* Active page button color */
+    font-weight: bold; /* Bold font for active page */
+}
+
+.searchContainer {
+    margin-bottom: 20px; /* Space below the search bar */
+}
+
+.searchInput {
+    padding: 10px; /* Inner padding */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border */
+    font-size: 16px; /* Font size */
+    width: 300px; /* Width of the search input */
+}

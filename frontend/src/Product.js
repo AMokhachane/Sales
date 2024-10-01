@@ -6,6 +6,9 @@ const Product = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]); // State for unique categories
   const [selectedCategory, setSelectedCategory] = useState(""); // State for the selected category
+  const [currentPage, setCurrentPage] = useState(1); // State for the current page
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const productsPerPage = 4; // Number of products per page
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,22 +29,59 @@ const Product = () => {
     fetchData();
   }, []);
 
-  // Filter products based on the selected category
-  const filteredProducts = selectedCategory
-    ? products.filter((product) => product.category === selectedCategory)
-    : products;
+  // Filter products based on the selected category and search query
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "" || product.category === selectedCategory;
+    const matchesSearch =
+      product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  // Calculate the index of the last product and the first product of the current page
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
-    <div>
-      <h2>Product List</h2>
+    <div className={ProductCSS.productContainer}>
+      <h2 className={ProductCSS.title}>Product List</h2>
+
+      {/* Search Bar */}
+      <div className={ProductCSS.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            setCurrentPage(1); // Reset to the first page when search changes
+          }}
+          className={ProductCSS.searchInput}
+        />
+      </div>
 
       {/* Category Filter */}
-      <div>
-        <h3>Filter by Category</h3>
+      <div className={ProductCSS.filterContainer}>
+        <h3 className={ProductCSS.filterTitle}>Filter by Category</h3>
         <select
           value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)} // Update selected category
-          className={ProductCSS.categorySelect} // Add a style class if needed
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            setCurrentPage(1); // Reset to the first page when category changes
+          }}
+          className={ProductCSS.categorySelect}
         >
           <option value="">All Categories</option>
           {categories.map((category, index) => (
@@ -53,20 +93,39 @@ const Product = () => {
       </div>
 
       <div className={ProductCSS.productList}>
-        {filteredProducts.map((product) => (
+        {currentProducts.map((product) => (
           <div key={product.id} className={ProductCSS.productCard}>
             <img
               src={product.image}
               alt={product.description}
               className={ProductCSS.productImage}
             />
-            <h3>{product.name}</h3>
-            <p>Description: {product.description}</p> {/* Display product description */}
-            <p>Category: {product.category}</p>
-            <p style={{ fontWeight: "bold", color: "#4CAF50" }}>
-              Sale Price: ${product.salePrice} {/* Display sale price */}
+            <h3 className={ProductCSS.productName}>{product.name}</h3>
+            <p className={ProductCSS.productDescription}>
+              Description: {product.description}
+            </p>
+            <p className={ProductCSS.productCategory}>
+              Category: {product.category}
+            </p>
+            <p className={ProductCSS.productPrice}>
+              Sale Price: ${product.salePrice}
             </p>
           </div>
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className={ProductCSS.pagination}>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`${ProductCSS.pageButton} ${
+              currentPage === index + 1 ? ProductCSS.active : ""
+            }`} // Highlight active page
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
     </div>
