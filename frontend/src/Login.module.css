@@ -1,10 +1,7 @@
 .loginContainer {
     display: flex;
     height: 100vh;
-}
-
-.left {
-    width: 70%;
+	width: 100%;
     background-color: #f5f0ef;
     display: flex;
     flex-direction: column;
@@ -12,57 +9,54 @@
     justify-content: center;
 }
 
+
 .boldText {
     font-weight: bold;
     margin-left: 30px; /* Adjust this value as needed */
-}
-
-.rightSide {
-    width: 30%;
-    background-color: #2B4F63;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	color: green;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 50px; /* Space below the logo */
+	margin-left: 150px;
 }
 
 .logoSquare {
-    width: 90px;
-    height: 90px;
-    background-color: #FFC0CB;
-    margin-right: 10px;
-    position: relative;
+    width: 80px; /* Adjusted width */
+    height: 80px; /* Adjusted height */
+    background-color: #d8f3dc; /* Light green background to represent freshness */
+    margin-right: 15px; /* Spacing between the icon and text */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-.logoSquare::before {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #d8d8d8;
-    left: 60px;
-    top: 30px;
+.boldText {
+    font-size: 28px; /* Increased font size for better visibility */
+    font-weight: 700; /* Bold text */
+    color: #2f4f4f; /* Dark slate color for text */
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Slight text shadow for better readability */
 }
 
-.logoSquare::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #000;
-    left: 90px;
-    top: 30px;
-}
+/* Optional media query for responsiveness */
+@media (max-width: 600px) {
+    .boldText {
+        font-size: 24px; /* Slightly smaller font size on smaller screens */
+    }
 
+    .logoSquare {
+        width: 60px; /* Smaller icon */
+        height: 60px; /* Smaller icon */
+    }
+}
 .Group {
     margin-bottom: 20px;
     width: 100%;
-    margin-left: 350px;
+    margin-left: 150px;
 }
 
 .label {
@@ -75,7 +69,7 @@
     width: 409px;
 	height: 40px;
     padding: 0px;
-    border: 1px solid #FFC0CB;
+    border: 1px solid #20682b;
     border-radius: 5px;
 }
 
@@ -92,22 +86,22 @@
 .forgotPasswordAndButton {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 70%; /* Ensures full width of the container */
+    justify-content: space-between; /* This keeps items spaced apart */
+    width: 64%; /* Ensures full width of the container */
     margin-top: 20px; /* Adds some space from the input fields */
-    margin-left: 350px;
+    margin-left: 150px;
 }
 
 .forgotPassword {
-    color: #2B4F63;
+    color: #20682b;
     text-decoration: none;
-    margin-right: 20px; /* Adds space between link and button */
+    margin-right: auto; /* Allows the link to push to the left */
 }
 
 .loginButton {
     width: 104px; /* Set width to 104px */
     height: 37px; /* Set height to 37px */
-    background-color: #2B4F63;
+    background-color: #20682b;
     color: white;
     border: none;
     border-radius: 5px;
@@ -116,6 +110,16 @@
     display: flex;
     align-items: center;
     justify-content: center; /* Centers text inside the button */
-    margin-right: 415px;
+    
 }
 
+.registerLink {
+    margin-top: 20px; /* Space from the login button */
+    font-size: 14px; /* Font size for the message */
+	margin-left: 150px;
+}
+
+.register {
+    color: #20682b; /* Register link color */
+    text-decoration: underline; /* Underline for emphasis */
+}

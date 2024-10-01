@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
-import styles from "./Login.module.css"; // Assuming CSS is scoped via modules
+import axios from "axios"; 
+import styles from "./Login.module.css"; 
 import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAppleAlt } from '@fortawesome/free-solid-svg-icons'; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,9 +27,8 @@ const Login = () => {
       try {
         // API call to login
         const response = await axios.post("http://localhost:5264/api/accounts/login", {
-          email: email, // Assuming email is used as the username
+          email: email, 
           password: password,
-          remember: true, // Optional: pass the "Remember Me" option
         });
 
         // Handle success
@@ -55,8 +56,10 @@ const Login = () => {
     <div className={styles.loginContainer}>
       <div className={styles.left}>
         <div className={styles.logo}>
-          <div className={styles.logoSquare}></div>
-          <span className={styles.boldText}>SalarySync</span>
+          <div className={styles.logoSquare}>
+            <FontAwesomeIcon icon={faAppleAlt} size="3x" color="#green" />
+          </div>
+          <span className={styles.boldText}>FRESH FRUITS & VEGGIES</span>
         </div>
         {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
         {serverError && <p className={styles.errorMessage}>{serverError}</p>} {/* Display server errors */}
@@ -94,11 +97,16 @@ const Login = () => {
             </button>
           </div>
         </form>
+        
+        {/* Register link section */}
+        <div className={styles.registerLink}>
+          <p>If you don't have an account, <Link to="/register" className={styles.register}>register here</Link>.</p>
+        </div>
       </div>
 
       <div className={styles.rightSide}>
         <div className={styles.iconGrid}>
-        {/* <img src="https://res.cloudinary.com/drgxphf5l/image/upload/v1726736758/qwbddlqxjjgxsvbdcudg.png" className='image' /> */}
+          {/* <img src="https://res.cloudinary.com/drgxphf5l/image/upload/v1726736758/qwbddlqxjjgxsvbdcudg.png" className='image' /> */}
         </div>
       </div>
     </div>

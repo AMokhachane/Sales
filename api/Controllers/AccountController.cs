@@ -95,11 +95,34 @@ private async Task<string> GenerateEmailConfirmationLink(AppUser newUser)
 
 private async Task SendConfirmationEmail(string email, string confirmationLink)
 {
+    // string confirmationEmailTemplate = $@"
+    //     <h1>Welcome to Image App Gallery</h1>
+    //     <p>Please click the link below to confirm your email:</p>
+    //     <a href='{confirmationLink}'>Confirm Email</a>
+    // ";
+
     string confirmationEmailTemplate = $@"
-        <h1>Welcome to Image App Gallery</h1>
-        <p>Please click the link below to confirm your email:</p>
-        <a href='{confirmationLink}'>Confirm Email</a>
-    ";
+    <h1>Welcome to FRESH FRUITS & VEGGIES</h1>
+    <h3>Hi</h3>
+    
+    <div style='padding: 0 0 10px;'>
+        <h4>Please click the link below to confirm your email:</h4>
+        <a href='{confirmationLink}'
+        style='
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin: 10px auto;
+            background-color: #20682b;
+            color: #black; 
+            height: 40px;
+            text-decoration: none;'
+        >Confirm Account
+        </a>
+    </div>
+    <p>This link will expire in 24 hours. If you encounter any issues, please reach out to our support team.</p>
+    <p>Thank you,</p>
+    <p>Best regards,</p>
+    <p>The FRESH FRUITS & VEGGIES Team</p>";
 
     await emailSender.SendEmailAsync(email, "Email Confirmation", confirmationEmailTemplate, true);
 }
@@ -190,6 +213,54 @@ private async Task SendConfirmationEmail(string email, string confirmationLink)
                 logger.LogError(ex, "Error occurred during login.");
                 return BadRequest(new { message = "An error occurred. Please try again." });
             }
+        }
+
+        [HttpPost("forgotpassword")]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model)
+        {
+            // Find the user by email
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
+            {
+                logger.LogWarning("Forgot password attempt for non-existent or unconfirmed email {Email}", model.Email);
+                return BadRequest(new { message = "User with this email does not exist or email is not confirmed." });
+            }
+
+            // Generate password reset token
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = WebUtility.UrlEncode(token);
+            var resetLink = $"http://localhost:3000/password?email={model.Email}&token={encodedToken}";
+
+            // Send the reset password email
+            // Email template for password reset
+            string resetPasswordEmailTemplate = $@"
+    <h1>Password reset for FRESH FRUITS & VEGGIES</h1>
+    <h3>Hi</h3>
+    <p>We received a request to reset the password for your account associated with this email address. If you did not make this request, please ignore this email.</p>
+    <div style='padding: 0 0 10px;'>
+        <h4>To reset your password, please click the button below:</h4>
+        <a href='{resetLink}'
+        style='
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin: 10px auto;
+            background-color: #20682b;
+            color: #black; 
+            height: 40px;
+            text-decoration: none;'
+        >Reset Password
+        </a>
+    </div>
+    <p>This link will expire in 24 hours. If you encounter any issues, please reach out to our support team.</p>
+    <p>Thank you,</p>
+    <p>Best regards,</p>
+    <p>The FRESH FRUITS & VEGGIES Team</p>";
+
+            await emailSender.SendEmailAsync(model.Email, "Reset Password", resetPasswordEmailTemplate, true);
+
+
+            logger.LogInformation("Password reset email sent to {Email}", model.Email);
+            return Ok(new { message = "Password reset email sent. Please check your inbox." });
         }
     }
 }
