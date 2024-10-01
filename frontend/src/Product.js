@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCSS from "./Product.module.css"; // Import the styles
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -56,6 +58,12 @@ const Product = () => {
 
   return (
     <div className={ProductCSS.productContainer}>
+      <div className={ProductCSS.logo}>
+          <div className={ProductCSS.logoSquare}>
+            <FontAwesomeIcon icon={faAppleAlt} size="3x" color="green" />
+          </div>
+          <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
+        </div>
       <h2 className={ProductCSS.title}>Product List</h2>
 
       {/* Search Bar */}

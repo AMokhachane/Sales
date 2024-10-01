@@ -118,3 +118,29 @@
     font-size: 16px; /* Font size */
     width: 300px; /* Width of the search input */
 }
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px; /* Space below the logo */
+	margin-left: -1220px;
+}
+
+.logoSquare {
+    width: 80px; /* Adjusted width */
+    height: 80px; /* Adjusted height */
+    background-color: #d8f3dc; /* Light green background to represent freshness */
+    margin-right: 15px; /* Spacing between the icon and text */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.boldText {
+    font-size: 28px; /* Increased font size for better visibility */
+    font-weight: 700; /* Bold text */
+    color: #2f4f4f; /* Dark slate color for text */
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Slight text shadow for better readability */
+}
