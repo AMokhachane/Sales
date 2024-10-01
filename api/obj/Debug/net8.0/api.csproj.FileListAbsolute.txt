@@ -144,3 +144,4 @@ C:\Users\AMokhachane.SINGULAR\Documents\Projects\Sales\api\bin\Debug\net8.0\ru\M
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Sales\api\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Sales\api\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Sales\api\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\AMokhachane.SINGULAR\Documents\Projects\Sales\api\obj\Debug\net8.0\api.sourcelink.json

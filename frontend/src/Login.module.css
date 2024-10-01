@@ -1,0 +1,121 @@
+.loginContainer {
+    display: flex;
+    height: 100vh;
+}
+
+.left {
+    width: 70%;
+    background-color: #f5f0ef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.boldText {
+    font-weight: bold;
+    margin-left: 30px; /* Adjust this value as needed */
+}
+
+.rightSide {
+    width: 30%;
+    background-color: #2B4F63;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.logoSquare {
+    width: 90px;
+    height: 90px;
+    background-color: #FFC0CB;
+    margin-right: 10px;
+    position: relative;
+}
+
+.logoSquare::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #d8d8d8;
+    left: 60px;
+    top: 30px;
+}
+
+.logoSquare::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #000;
+    left: 90px;
+    top: 30px;
+}
+
+.Group {
+    margin-bottom: 20px;
+    width: 100%;
+    margin-left: 350px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    font: inter;
+}
+
+.inputField {
+    width: 409px;
+	height: 40px;
+    padding: 0px;
+    border: 1px solid #FFC0CB;
+    border-radius: 5px;
+}
+
+.successMessage {
+    color: green;
+    margin-bottom: 10px;
+}
+
+.errorMessage {
+    color: red;
+    margin-bottom: 5px;
+}
+
+.forgotPasswordAndButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%; /* Ensures full width of the container */
+    margin-top: 20px; /* Adds some space from the input fields */
+    margin-left: 350px;
+}
+
+.forgotPassword {
+    color: #2B4F63;
+    text-decoration: none;
+    margin-right: 20px; /* Adds space between link and button */
+}
+
+.loginButton {
+    width: 104px; /* Set width to 104px */
+    height: 37px; /* Set height to 37px */
+    background-color: #2B4F63;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0; /* Ensures the button doesn't shrink */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers text inside the button */
+    margin-right: 415px;
+}
+

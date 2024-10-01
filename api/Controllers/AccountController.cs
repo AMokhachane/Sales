@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using api.Models;
 using api.Data;
 using api.Interfaces;
+using api.Dtos.Account;
 
 namespace api.Controllers
 {
@@ -43,98 +44,65 @@ namespace api.Controllers
         }
 
         // Endpoint for registering a new user
-        [HttpPost("register")]
-        public async Task<ActionResult> RegisterUser(AppUser user)
+[HttpPost("register")]
+public async Task<ActionResult> RegisterUser([FromBody] RegisterDto userDto)
+{
+    try
+    {
+        // Create a new user object
+        AppUser newUser = new AppUser
         {
-            try
-            {
-                // Create a new user object
-                AppUser newUser = new AppUser
-                {
+            Email = userDto.EmailAddress,
+            UserName = userDto.Username,
+        };
 
-                    Email = user.Email,
-                    UserName = user.UserName,
+        // Create the user in the database
+        var result = await userManager.CreateAsync(newUser, userDto.Password);
 
-                };
-
-                // Create the user in the database
-                var result = await userManager.CreateAsync(newUser, user.PasswordHash);
-
-                // Check if user creation was successful
-                if (!result.Succeeded)
-                {
-                    var errorMessages = result.Errors.Select(e => e.Description).ToList();
-                    logger.LogWarning("User registration failed: {Errors}", string.Join(", ", errorMessages));
-                    return BadRequest(new { errors = errorMessages });
-                }
-
-                // Add password history for the user
-                dbContext.PasswordHistories.Add(new PasswordHistory
-                {
-                    UserId = newUser.Id,
-                    PasswordHash = userManager.PasswordHasher.HashPassword(newUser, user.PasswordHash)
-                });
-                await dbContext.SaveChangesAsync();
-
-                // Generate email confirmation token
-                var token = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                logger.LogInformation("Email confirmation token generated for user {UserId}", newUser.Id);
-
-                // Store the email confirmation token
-                await userManager.SetAuthenticationTokenAsync(newUser, "CustomProvider", "EmailConfirmation", token);
-
-                // Generate and log the confirmation link
-                var encodedToken = WebUtility.UrlEncode(token);
-                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { email = newUser.Email, token = encodedToken }, Request.Scheme);
-                logger.LogInformation("Confirmation link generated: {ConfirmationLink}", confirmationLink);
-
-                // Modify and log the confirmation link
-                var modifiedLink = ModifyConfirmationLink(confirmationLink);
-                logger.LogInformation("Modified confirmation link: {ModifiedLink}", modifiedLink);
-
-                // Send the confirmation email
-                // Email template for registration confirmation
-                string confirmationEmailTemplate = $@"
-    <h1>Welcome to Image App Gallery</h1>
-    <h3>Dear </h3>
-    <p>We are thrilled to have you join our community. At <span style='color: #2187AB;'>ImageApp Gallery</span>, we strive to provide you with the best experience for exploring and sharing stunning images.</p>
-    <p>Thank you for signing up! Here are a few things you can do to get started:</p>
-    <ul>
-        <li>Explore our extensive collection of images.</li>
-        <li>Upload and share your own amazing photos.</li>
-        <li>Connect with other photography enthusiasts.</li>
-    </ul>
-    <div style='padding: 0 0 10px;'>
-        <h4>Before you can login, please click the button below to activate your account.</h4>
-        <a href='{modifiedLink}'
-        style='
-            padding: 10px 15px;
-            border-radius: 4px;
-            margin: 10px auto;
-            background-color: #2187AB;
-            color: #E9F5F9; 
-            height: 40px;
-            text-decoration: none;'
-        >Confirm Email
-        </a>
-    </div>
-    <p>If you have any questions or need assistance, feel free to reach out to our support team.</p>
-    <h4>Signature</h4>
-    <p>Best regards,</p>
-    <p>The ImageApp Gallery Team</p>";
-
-                await emailSender.SendEmailAsync(user.Email, "Image Gallery App Email Confirmation", confirmationEmailTemplate, true);
-                logger.LogInformation("Confirmation email sent to {Email}", user.Email);
-
-                // Return success response
-                return Ok(new { message = "Registered Successfully. Please check your email to confirm your account." });
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error occurred during user registration.");
-                return BadRequest(new { message = "Something went wrong, please try again. " + ex.Message });
-            }
+        // Check if user creation was successful
+        if (!result.Succeeded)
+        {
+            var errorMessages = result.Errors.Select(e => e.Description).ToList();
+            logger.LogWarning("User registration failed: {Errors}", string.Join(", ", errorMessages));
+            return BadRequest(new { errors = errorMessages });
         }
+
+        // Generate and send the confirmation email
+        string confirmationLink = await GenerateEmailConfirmationLink(newUser);
+        await SendConfirmationEmail(newUser.Email, confirmationLink);
+
+        // Return simplified success response
+        return Ok(new
+        {
+            message = "Registered Successfully. Please check your email to confirm your account."
+        });
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Error occurred during user registration.");
+        return BadRequest(new { message = "Something went wrong, please try again. " + ex.Message });
+    }
+}
+
+// Helper methods for email confirmation
+private async Task<string> GenerateEmailConfirmationLink(AppUser newUser)
+{
+    var token = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
+    var encodedToken = WebUtility.UrlEncode(token);
+    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { email = newUser.Email, token = encodedToken }, Request.Scheme);
+    return confirmationLink;
+}
+
+private async Task SendConfirmationEmail(string email, string confirmationLink)
+{
+    string confirmationEmailTemplate = $@"
+        <h1>Welcome to Image App Gallery</h1>
+        <p>Please click the link below to confirm your email:</p>
+        <a href='{confirmationLink}'>Confirm Email</a>
+    ";
+
+    await emailSender.SendEmailAsync(email, "Email Confirmation", confirmationEmailTemplate, true);
+}
 
         // Endpoint to confirm email
         [HttpGet("confirmemail")]
