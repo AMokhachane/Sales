@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; 
-import ProductCSS from "./Product.module.css"; 
+import { useNavigate, Link } from "react-router-dom";
+import ProductCSS from "./Product.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]); // State for unique categories
-  const [selectedCategory, setSelectedCategory] = useState(""); // State for the selected category
-  const [currentPage, setCurrentPage] = useState(1); // State for the current page
-  const [searchQuery, setSearchQuery] = useState(""); // State for search input
-  const productsPerPage = 4; // Number of products per page
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const productsPerPage = 4;
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,16 +34,15 @@ const Product = () => {
     fetchData();
   }, []);
 
-  // Filter products based on the selected category and search query
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategory === "" || product.category === selectedCategory;
-    const matchesSearch =
-      product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = product.description
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  // Calculate the index of the last product and the first product of the current page
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(
@@ -51,18 +50,21 @@ const Product = () => {
     indexOfLastProduct
   );
 
-  // Calculate total pages
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-  // Handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  // Navigate to the sales page with the product ID
   const handleProductClick = (productId) => {
     navigate(`/product-sales/${productId}`);
   };
+
+  // Retrieve user info from local storage
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userRole = user?.role || "Guest"; // Default to "Guest" if not found
+  const userName = user?.userName || "User"; // Default name if not found
+  const userEmail = user?.userEmail || "user@example.com"; // Default email if not found
 
   return (
     <div className={ProductCSS.productContainer}>
@@ -72,81 +74,107 @@ const Product = () => {
         </div>
         <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
       </div>
-      <h2 className={ProductCSS.title}>Product List</h2>
 
-      {/* Search Bar */}
-      <div className={ProductCSS.searchContainer}>
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setCurrentPage(1); // Reset to the first page when search changes
-          }}
-          className={ProductCSS.searchInput}
-        />
-      </div>
+      <div className={ProductCSS.left}>
+        {/* Search Bar */}
+        <div className={ProductCSS.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
+            className={ProductCSS.searchInput}
+          />
+        </div>
 
-      {/* Category Filter */}
-      <div className={ProductCSS.filterContainer}>
-        <h3 className={ProductCSS.filterTitle}>Filter by Category</h3>
-        <select
-          value={selectedCategory}
-          onChange={(e) => {
-            setSelectedCategory(e.target.value);
-            setCurrentPage(1); // Reset to the first page when category changes
-          }}
-          className={ProductCSS.categorySelect}
-        >
-          <option value="">All Categories</option>
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
+        {/* Category Filter */}
+        <div className={ProductCSS.filterContainer}>
+          <h3 className={ProductCSS.filterTitle}>Filter by Category</h3>
+          <select
+            value={selectedCategory}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setCurrentPage(1);
+            }}
+            className={ProductCSS.categorySelect}
+          >
+            <option value="">All Categories</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className={ProductCSS.productList}>
+          {currentProducts.map((product) => (
+            <div
+              key={product.id}
+              className={ProductCSS.productCard}
+              onClick={() => handleProductClick(product.id)}
+            >
+              <img
+                src={product.image}
+                alt={product.description}
+                className={ProductCSS.productImage}
+              />
+              <h3 className={ProductCSS.productName}>{product.name}</h3>
+              <p className={ProductCSS.productDescription}>
+                Description: {product.description}
+              </p>
+              <p className={ProductCSS.productCategory}>
+                Category: {product.category}
+              </p>
+              <p className={ProductCSS.productPrice}>
+                Sale Price: ${product.salePrice}
+              </p>
+            </div>
           ))}
-        </select>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className={ProductCSS.pagination}>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`${ProductCSS.pageButton} ${
+                currentPage === index + 1 ? ProductCSS.active : ""
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className={ProductCSS.productList}>
-        {currentProducts.map((product) => (
-          <div
-            key={product.id}
-            className={ProductCSS.productCard}
-            onClick={() => handleProductClick(product.id)} // Add onClick event
-          >
-            <img
-              src={product.image}
-              alt={product.description}
-              className={ProductCSS.productImage}
-            />
-            <h3 className={ProductCSS.productName}>{product.name}</h3>
-            <p className={ProductCSS.productDescription}>
-              Description: {product.description}
-            </p>
-            <p className={ProductCSS.productCategory}>
-              Category: {product.category}
-            </p>
-            <p className={ProductCSS.productPrice}>
-              Sale Price: ${product.salePrice}
-            </p>
+      <div className={ProductCSS.rightSide}>
+        <h2 className={ProductCSS.welcomeMessage}>
+          Welcome, you are logged in as{" "}
+        </h2>
+
+        <div className={ProductCSS.userInfo}>
+          <div className={ProductCSS.profilePictureContainer}>
+            <FontAwesomeIcon icon={faUser} className={ProductCSS.userIcon} />
           </div>
-        ))}
-      </div>
+          <span className={ProductCSS.userRole}>{userRole}</span>
+          <p className={ProductCSS.userEmail}>{userEmail}</p>
+        </div>
 
-      {/* Pagination Controls */}
-      <div className={ProductCSS.pagination}>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            className={`${ProductCSS.pageButton} ${
-              currentPage === index + 1 ? ProductCSS.active : ""
-            }`} // Highlight active page
-          >
-            {index + 1}
-          </button>
-        ))}
+        {/* Logout Button placed inside the rightSide */}
+        <button
+          className={ProductCSS.logoutButton}
+          onClick={() => {
+            localStorage.removeItem("user"); // Optional: Clear user data
+            navigate("/"); // Navigate to the login page
+          }}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

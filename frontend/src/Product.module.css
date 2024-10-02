@@ -9,6 +9,31 @@
     overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
+.rightSide {
+    background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2);
+    padding: 20px; /* Padding around the content */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: 300px; /* Set width for the right side section */
+    position: absolute; /* Position it to the right */
+    right: 20px; /* Distance from the right edge */
+    top: 20px; /* Distance from the top edge */
+    height: 100vh;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #d8f3dc; /* Light background for the container */
+    height: 100vh;
+    justify-content: flex-start; /* Align content at the top */
+    overflow-y: auto; /* Allow scrolling if content overflows */ 
+    margin-top: -100px; /* Add margin to move it up */
+}
+
 .title {
     font-size: 36px;
     color: #2f4f4f; /* Match with your login page color */
@@ -16,7 +41,15 @@
 }
 
 .filterContainer {
+   
+    margin-left: 300px;
+    margin-top: -100px;
     margin-bottom: 20px;
+}
+
+.searchContainer{
+    margin-top: 40px;
+    margin-right: 350px;
 }
 
 .filterTitle {
@@ -144,3 +177,81 @@
     color: #2f4f4f; /* Dark slate color for text */
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Slight text shadow for better readability */
 }
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align to the right */
+    position: absolute; /* Make it absolute to position it relative to the container */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    margin: 0; /* Remove margin to avoid extra spacing */
+}
+
+.profilePictureContainer {
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Adjust size as needed */
+    border-radius: 50%; /* Make it round */
+    background-color: lightgrey; /* Optional: background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Space below the profile picture */
+    margin-right: 50px;
+    margin-top: 120px; /* Add space above the profile picture */
+}
+  .userIcon {
+    font-size: 100px; /* Adjust icon size as needed */
+    color: #2f4f4f; /* Color of the icon */
+  }
+  
+  .userInfo {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children */
+    
+  }
+  
+  
+  
+  .welcomeMessage {
+    font-size: 30px; /* Adjust font size as needed */
+    color: rgb(155, 241, 181); /* Set the text color to green */
+    margin-bottom: 10px; /* Space below the welcome message */
+    font-family: 'YourLogoFont', sans-serif; /* Replace with the font used in the logo */
+  }
+  
+  .userRole {
+    font-weight: bold; /* Make the user role bold */
+    color: rgb(155, 241, 181); /* Set the user role color to green */
+    font-family: 'YourLogoFont', sans-serif; /* Ensure the same font is used */
+    margin-right: 40px; /* Remove default margin */
+    font-size: 20px;
+  }
+
+  .userEmail {
+    font-size: 20px; /* Adjust font size for email */
+    font-weight: bold; /* Make email bold */
+    margin-top: 10px; /* Remove default margin */
+    text-align: center; /* Center the email */
+    color: rgb(155, 241, 181);
+    margin-right: 40px;
+  }
+  
+
+  .logoutButton {
+    margin-top: 750px; /* Space above the button */
+    padding: 10px 20px; /* Button padding */
+    font-size: 16px; /* Font size */
+    color: white; /* Text color */
+    background-color: #2f4f4f; /* Background color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    margin-left: 210px;
+  }
+  
+  .logoutButton:hover {
+    background-color: #ff6b81; /* Lighter color on hover */
+  }
