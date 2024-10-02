@@ -172,60 +172,62 @@ private async Task SendConfirmationEmail(string email, string confirmationLink)
         }
 
         // Endpoint to login a user
-        [HttpPost("login")]
-        public async Task<ActionResult> LoginUser(Login login)
+       [HttpPost("login")]
+public async Task<ActionResult> LoginUser(Login login)
+{
+    try
+    {
+        // Validate the login model
+        if (!ModelState.IsValid)
         {
-            try
-            {
-                // Validate the login model
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                var user = await userManager.FindByEmailAsync(login.Email);
-                if (user == null)
-                {
-                    logger.LogWarning("Login attempt failed for non-existent email {Email}", login.Email);
-                    return BadRequest(new { message = "Please check your credentials and try again." });
-                }
-
-                if (!user.EmailConfirmed)
-                {
-                    logger.LogWarning("Login attempt for unconfirmed email {Email}", login.Email);
-                    return Unauthorized(new { message = "Email not confirmed yet." });
-                }
-
-                // Attempt to sign in the user without the Remember parameter
-                var result = await signInManager.PasswordSignInAsync(user.UserName, login.Password, isPersistent: false, lockoutOnFailure: true);
-
-                if (result.Succeeded)
-                {
-                    logger.LogInformation("User {UserId} logged in successfully", user.Id);
-                    return Ok(new { message = "Login successful.", userEmail = user.Email, userID = user.Id });
-                }
-
-                if (result.RequiresTwoFactor)
-                {
-                    logger.LogWarning("Two-factor authentication required for user {UserId}", user.Id);
-                    return BadRequest(new { message = "Two-factor authentication required." });
-                }
-
-                if (result.IsLockedOut)
-                {
-                    logger.LogWarning("User {UserId} is locked out", user.Id);
-                    return BadRequest(new { message = "Account locked out due to multiple failed login attempts." });
-                }
-
-                logger.LogWarning("Invalid login attempt for user {UserId}", user.Id);
-                return Unauthorized(new { message = "Check your login credentials and try again." });
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error occurred during login.");
-                return BadRequest(new { message = "An error occurred. Please try again." });
-            }
+            return BadRequest(ModelState);
         }
+
+        var user = await userManager.FindByEmailAsync(login.Email);
+        if (user == null)
+        {
+            logger.LogWarning("Login attempt failed for non-existent email {Email}", login.Email);
+            return BadRequest(new { message = "Please check your credentials and try again." });
+        }
+
+        if (!user.EmailConfirmed)
+        {
+            logger.LogWarning("Login attempt for unconfirmed email {Email}", login.Email);
+            return Unauthorized(new { message = "Email not confirmed yet." });
+        }
+
+        // Attempt to sign in the user without the Remember parameter
+        var result = await signInManager.PasswordSignInAsync(user.UserName, login.Password, isPersistent: false, lockoutOnFailure: true);
+
+        if (result.Succeeded)
+        {
+            // Retrieve roles for the user
+            var roles = await userManager.GetRolesAsync(user); // Retrieve roles
+            logger.LogInformation("User {UserId} logged in successfully", user.Id);
+            return Ok(new { message = "Login successful.", userEmail = user.Email, userID = user.Id, role = roles.FirstOrDefault() }); // Return the first role
+        }
+
+        if (result.RequiresTwoFactor)
+        {
+            logger.LogWarning("Two-factor authentication required for user {UserId}", user.Id);
+            return BadRequest(new { message = "Two-factor authentication required." });
+        }
+
+        if (result.IsLockedOut)
+        {
+            logger.LogWarning("User {UserId} is locked out", user.Id);
+            return BadRequest(new { message = "Account locked out due to multiple failed login attempts." });
+        }
+
+        logger.LogWarning("Invalid login attempt for user {UserId}", user.Id);
+        return Unauthorized(new { message = "Check your login credentials and try again." });
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Error occurred during login.");
+        return BadRequest(new { message = "An error occurred. Please try again." });
+    }
+}
 
         [HttpPost("forgotpassword")]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model)

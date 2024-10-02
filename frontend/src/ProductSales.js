@@ -7,8 +7,9 @@ const ProductSales = () => {
   const { productId } = useParams(); // Get the productId from the route
   const [salesData, setSalesData] = useState([]);
   
-  // Assuming you are getting user role from local storage or context
-  const userRole = localStorage.getItem("userRole"); // "normal" or "manager"
+  // Get user role from local storage
+  const user = JSON.parse(localStorage.getItem("user")); // Get user from local storage
+  const userRole = user?.role; // Extract user role
 
   useEffect(() => {
     const fetchSalesData = async () => {

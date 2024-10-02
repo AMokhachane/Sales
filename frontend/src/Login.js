@@ -25,36 +25,36 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      try {
-        const response = await axios.post(
-          "http://localhost:5264/api/accounts/login",
-          {
-            email: email,
-            password: password,
-          }
-        );
+        try {
+            const response = await axios.post(
+                "http://localhost:5264/api/accounts/login",
+                {
+                    email: email,
+                    password: password,
+                }
+            );
 
-        if (response.status === 200) {
-          const { userEmail, userName, userID } = response.data;
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ userName, userEmail, userID })
-          );
-          setSuccessMessage("Login successful!");
-          setEmail("");
-          setPassword("");
-          setErrors({});
-          navigate("/home");
+            if (response.status === 200) {
+                const { userEmail, userID, role } = response.data; // Get role from response
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify({ userEmail, userID, role }) // Store role in local storage
+                );
+                setSuccessMessage("Login successful!");
+                setEmail("");
+                setPassword("");
+                setErrors({});
+                navigate("/home");
+            }
+        } catch (error) {
+            if (error.response) {
+                setServerError(error.response.data.message);
+            } else {
+                setServerError("An error occurred. Please try again.");
+            }
         }
-      } catch (error) {
-        if (error.response) {
-          setServerError(error.response.data.message);
-        } else {
-          setServerError("An error occurred. Please try again.");
-        }
-      }
     }
-  };
+};
 
   return (
     <div className={styles.loginContainer}>
