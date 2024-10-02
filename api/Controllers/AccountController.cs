@@ -20,6 +20,7 @@ namespace api.Controllers
     {
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ISenderEmail emailSender;
         private readonly ILogger<AccountController> logger;
         private readonly ApplicationDBContext dbContext;
@@ -27,6 +28,7 @@ namespace api.Controllers
         public AccountController(
             SignInManager<AppUser> sm,
             UserManager<AppUser> um,
+            RoleManager<IdentityRole> roleManager,
             ISenderEmail es,
             ILogger<AccountController> logger,
             ApplicationDBContext dbContext)
@@ -34,6 +36,7 @@ namespace api.Controllers
             signInManager = sm;
             userManager = um;
             emailSender = es;
+            this.roleManager = roleManager;
             this.logger = logger;
             this.dbContext = dbContext;
         }
@@ -66,6 +69,15 @@ public async Task<ActionResult> RegisterUser([FromBody] RegisterDto userDto)
             logger.LogWarning("User registration failed: {Errors}", string.Join(", ", errorMessages));
             return BadRequest(new { errors = errorMessages });
         }
+
+        // Assign the role to the user
+        string role = userDto.Role; // Assuming you added Role to your RegisterDto
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            // Optionally, create the role if it doesn't exist
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+        await userManager.AddToRoleAsync(newUser, role);
 
         // Generate and send the confirmation email
         string confirmationLink = await GenerateEmailConfirmationLink(newUser);

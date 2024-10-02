@@ -6,6 +6,9 @@ import styles from "./ProductSales.module.css"; // Import your CSS module
 const ProductSales = () => {
   const { productId } = useParams(); // Get the productId from the route
   const [salesData, setSalesData] = useState([]);
+  
+  // Assuming you are getting user role from local storage or context
+  const userRole = localStorage.getItem("userRole"); // "normal" or "manager"
 
   useEffect(() => {
     const fetchSalesData = async () => {
@@ -24,6 +27,10 @@ const ProductSales = () => {
     fetchSalesData();
   }, [productId]);
 
+  // Calculate total sale price and total sale quantity
+  const totalSalePrice = salesData.reduce((total, sale) => total + sale.salePrice, 0);
+  const totalSaleQuantity = salesData.reduce((total, sale) => total + sale.saleQty, 0);
+
   return (
     <div className={styles.salesContainer}>
       <h2 className={styles.title}>Sales Data for Product {productId}</h2>
@@ -31,20 +38,34 @@ const ProductSales = () => {
         <thead>
           <tr>
             <th>Sale ID</th>
-            <th>Sale Price</th>
-            <th>Sale Quantity</th>
-            <th>Sale Date</th>
+            {userRole === "manager" && <th>Sale Price</th>}
+            {userRole === "manager" && <th>Sale Quantity</th>}
+            {userRole === "manager" && <th>Sale Date</th>}
           </tr>
         </thead>
         <tbody>
           {salesData.map((sale) => (
             <tr key={sale.saleId}>
               <td>{sale.saleId}</td>
-              <td>${sale.salePrice}</td>
-              <td>{sale.saleQty}</td>
-              <td>{new Date(sale.saleDate).toLocaleDateString()}</td>
+              {userRole === "manager" && <td>${sale.salePrice}</td>}
+              {userRole === "manager" && <td>{sale.saleQty}</td>}
+              {userRole === "manager" && <td>{new Date(sale.saleDate).toLocaleDateString()}</td>}
             </tr>
           ))}
+          {/* Display totals */}
+          <tr>
+            <td colSpan={userRole === "manager" ? 1 : 2}><strong>Total:</strong></td>
+            {userRole === "manager" && <td><strong>${totalSalePrice.toFixed(2)}</strong></td>}
+            {userRole === "manager" && <td><strong>{totalSaleQuantity}</strong></td>}
+            {userRole === "manager" && <td></td>}
+          </tr>
+          {userRole !== "manager" && (
+            <tr>
+              <td colSpan="3">
+                <strong>Total Sale Price:</strong> ${totalSalePrice.toFixed(2)} | <strong>Total Sale Quantity:</strong> {totalSaleQuantity}
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

@@ -3,13 +3,14 @@ import axios from 'axios';
 import styles from './Register.module.css'; // Assuming you have CSS for styles
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('normal user'); // Default role
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -23,6 +24,7 @@ const Register = () => {
             username,
             emailAddress,
             password,
+            role, // Include the selected role in the user data
         };
 
         try {
@@ -40,12 +42,12 @@ const Register = () => {
     return (
         <div className={styles.registerContainer}>
             <div className={styles.left}>
-			<div className={styles.logo}>
-          <div className={styles.logoSquare}>
-            <FontAwesomeIcon icon={faAppleAlt} size="3x" color="green" />
-          </div>
-          <span className={styles.boldText}>FRESH FRUITS & VEGGIES</span>
-        </div>
+                <div className={styles.logo}>
+                    <div className={styles.logoSquare}>
+                        <FontAwesomeIcon icon={faAppleAlt} size="3x" color="green" />
+                    </div>
+                    <span className={styles.boldText}>FRESH FRUITS & VEGGIES</span>
+                </div>
                 {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 <form onSubmit={handleRegister}>
@@ -82,6 +84,19 @@ const Register = () => {
                             required
                         />
                     </div>
+                    <div className={styles.Group}>
+                        <label htmlFor="role" className={styles.roleLabel}>Select Role:</label>
+                        <select
+                            id="role"
+                            className={styles.inputField}
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            required
+                        >
+                            <option value="normal user">Normal User</option>
+                            <option value="manager">Manager</option>
+                        </select>
+                    </div>
                     <button type="submit" className={styles.registerButton}>
                         Register
                     </button>
@@ -94,7 +109,7 @@ const Register = () => {
                         Create an account and unlock all the amazing features we have to offer.
                     </p>
                     <p>
-                        Already have an account? <Link to="/login" className={styles.signUpLink}>Login here</Link>.
+                        Already have an account? <Link to="/" className={styles.signUpLink}>Login here</Link>.
                     </p>
                 </div>
             </div>
