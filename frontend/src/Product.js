@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ProductCSS from "./Product.module.css"; // Import the styles
+import { useNavigate } from "react-router-dom"; 
+import ProductCSS from "./Product.module.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,6 +12,8 @@ const Product = () => {
   const [currentPage, setCurrentPage] = useState(1); // State for the current page
   const [searchQuery, setSearchQuery] = useState(""); // State for search input
   const productsPerPage = 4; // Number of products per page
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,14 +59,19 @@ const Product = () => {
     setCurrentPage(pageNumber);
   };
 
+  // Navigate to the sales page with the product ID
+  const handleProductClick = (productId) => {
+    navigate(`/product-sales/${productId}`);
+  };
+
   return (
     <div className={ProductCSS.productContainer}>
       <div className={ProductCSS.logo}>
-          <div className={ProductCSS.logoSquare}>
-            <FontAwesomeIcon icon={faAppleAlt} size="3x" color="green" />
-          </div>
-          <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
+        <div className={ProductCSS.logoSquare}>
+          <FontAwesomeIcon icon={faAppleAlt} size="3x" color="green" />
         </div>
+        <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
+      </div>
       <h2 className={ProductCSS.title}>Product List</h2>
 
       {/* Search Bar */}
@@ -102,7 +110,11 @@ const Product = () => {
 
       <div className={ProductCSS.productList}>
         {currentProducts.map((product) => (
-          <div key={product.id} className={ProductCSS.productCard}>
+          <div
+            key={product.id}
+            className={ProductCSS.productCard}
+            onClick={() => handleProductClick(product.id)} // Add onClick event
+          >
             <img
               src={product.image}
               alt={product.description}

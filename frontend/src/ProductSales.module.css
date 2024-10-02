@@ -1,0 +1,54 @@
+.salesContainer {
+	padding: 20px;
+	margin: 0 auto;
+	max-width: 800px;
+	background-color: #f9f9f9;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+	text-align: center;
+	font-size: 24px;
+	color: #333;
+	margin-bottom: 20px;
+  }
+  
+  .salesTable {
+	width: 100%;
+	border-collapse: collapse;
+  }
+  
+  .salesTable th,
+  .salesTable td {
+	padding: 12px 15px;
+	border: 1px solid #ddd;
+	text-align: left;
+  }
+  
+  .salesTable th {
+	background-color: #4caf50;
+	color: white;
+  }
+  
+  .salesTable tr:nth-child(even) {
+	background-color: #f2f2f2;
+  }
+  
+  .salesTable tr:hover {
+	background-color: #ddd;
+  }
+  
+  .salesTable td {
+	text-align: center;
+  }
+  
+  @media (max-width: 600px) {
+	.salesTable {
+	  font-size: 14px;
+	}
+  
+	.title {
+	  font-size: 20px;
+	}
+  }
