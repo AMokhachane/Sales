@@ -9,6 +9,7 @@ const Product = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const productsPerPage = 4;
@@ -37,10 +38,17 @@ const Product = () => {
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategory === "" || product.category === selectedCategory;
+    const matchesPrice =
+      selectedPriceRange === "" ||
+      (selectedPriceRange === "below10" && product.salePrice < 10) ||
+      (selectedPriceRange === "between10And20" &&
+        product.salePrice >= 10 &&
+        product.salePrice <= 20) ||
+      (selectedPriceRange === "above20" && product.salePrice > 20);
     const matchesSearch = product.description
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesCategory && matchesPrice && matchesSearch;
   });
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -68,13 +76,6 @@ const Product = () => {
 
   return (
     <div className={ProductCSS.productContainer}>
-      <div className={ProductCSS.logo}>
-        <div className={ProductCSS.logoSquare}>
-          <FontAwesomeIcon icon={faAppleAlt} size="3x" color="green" />
-        </div>
-        <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
-      </div>
-
       <div className={ProductCSS.left}>
         {/* Search Bar */}
         <div className={ProductCSS.searchContainer}>
@@ -150,31 +151,71 @@ const Product = () => {
             </button>
           ))}
         </div>
+
+        {/* Duplicate rightSide container here */}
+        <div className={ProductCSS.rightSide}>
+          <h2 className={ProductCSS.welcomeMessage}>
+            Welcome, you are logged in as{" "}
+          </h2>
+
+          <div className={ProductCSS.userInfo}>
+            <div className={ProductCSS.profilePictureContainer}>
+              <FontAwesomeIcon icon={faUser} className={ProductCSS.userIcon} />
+            </div>
+            <span className={ProductCSS.userRole}>{userRole}</span>
+            <p className={ProductCSS.userEmail}>{userEmail}</p>
+          </div>
+
+          {/* Logout Button placed inside the rightSide */}
+          <button
+            className={ProductCSS.logoutButton}
+            onClick={() => {
+              localStorage.removeItem("user"); // Optional: Clear user data
+              navigate("/"); // Navigate to the login page
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
-      <div className={ProductCSS.rightSide}>
-        <h2 className={ProductCSS.welcomeMessage}>
-          Welcome, you are logged in as{" "}
-        </h2>
-
-        <div className={ProductCSS.userInfo}>
-          <div className={ProductCSS.profilePictureContainer}>
-            <FontAwesomeIcon icon={faUser} className={ProductCSS.userIcon} />
+      <div className={ProductCSS.leftSide}>
+        <div className={ProductCSS.logo}>
+          <div className={ProductCSS.logoSquare}>
+            <FontAwesomeIcon icon={faAppleAlt} size="3x" color="green" />
           </div>
-          <span className={ProductCSS.userRole}>{userRole}</span>
-          <p className={ProductCSS.userEmail}>{userEmail}</p>
+          <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
         </div>
 
-        {/* Logout Button placed inside the rightSide */}
-        <button
-          className={ProductCSS.logoutButton}
-          onClick={() => {
-            localStorage.removeItem("user"); // Optional: Clear user data
-            navigate("/"); // Navigate to the login page
-          }}
-        >
-          Logout
-        </button>
+        <div className={ProductCSS.priceContainer}>
+          <h3 className={ProductCSS.filterTitle}>Filter by Price</h3>
+          <select
+            value={selectedPriceRange}
+            onChange={(e) => {
+              setSelectedPriceRange(e.target.value);
+              setCurrentPage(1);
+            }}
+            className={ProductCSS.priceSelect}
+          >
+            <option value="">All Prices</option>
+            <option value="below10">Below $10</option>
+            <option value="between10And20">$10 - $20</option>
+            <option value="above20">Above $20</option>
+          </select>
+        </div>
+
+        <div className={ProductCSS.tipsContainer}>
+          <h3 className={ProductCSS.tipsTitle}>
+            Tips for Picking Fresh Fruits & Veggies
+          </h3>
+          <ul className={ProductCSS.tipsList}>
+            <li>Look for vibrant colors; it often indicates ripeness.</li>
+            <li>Check for firmness; avoid overly soft or bruised spots.</li>
+            <li>Smell the fruit; a sweet aroma often means it's ripe.</li>
+            <li>For leafy greens, ensure leaves are crisp and green.</li>
+            <li>Avoid any items with mold, blemishes, or wrinkled skin.</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

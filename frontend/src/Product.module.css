@@ -8,18 +8,28 @@
     justify-content: flex-start; /* Align content at the top */
     overflow-y: auto; /* Allow scrolling if content overflows */
 }
-
 .rightSide {
     background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2);
-    padding: 20px; /* Padding around the content */
+    padding: 10px; /* Padding around the content */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     width: 300px; /* Set width for the right side section */
-    position: absolute; /* Position it to the right */
+    position: absolute;
     right: 20px; /* Distance from the right edge */
-    top: 20px; /* Distance from the top edge */
     height: 100vh;
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    
+}
+
+.leftSide {
+    background: linear-gradient(135deg, #c2f5b2, #4CAF50, #393a01);
+    padding: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 500px; 
+    position: absolute; 
+    left: 20px; 
+    height: 100vh;
+    
 }
 
 .left {
@@ -30,8 +40,7 @@
     background-color: #d8f3dc; /* Light background for the container */
     height: 100vh;
     justify-content: flex-start; /* Align content at the top */
-    overflow-y: auto; /* Allow scrolling if content overflows */ 
-    margin-top: -100px; /* Add margin to move it up */
+   
 }
 
 .title {
@@ -58,7 +67,21 @@
     margin-bottom: 10px;
 }
 
+.tipsTitle{
+    font-size: 24px;
+    color: #20682b; /* Consistent with login page theme */
+    margin-bottom: 10px;
+}
+
 .categorySelect {
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 200px; /* Set a width for the select box */
+}
+
+.priceSelect{
     padding: 10px;
     border-radius: 20px;
     border: 1px solid #ccc;
@@ -156,7 +179,6 @@
     display: flex;
     align-items: center;
     margin-bottom: 50px; /* Space below the logo */
-	margin-left: -1220px;
 }
 
 .logoSquare {
@@ -206,9 +228,9 @@
   }
   
   .userInfo {
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center children */
+    
+    flex-direction: column; 
+    align-items: center; 
     
   }
   
@@ -253,5 +275,30 @@
   }
   
   .logoutButton:hover {
-    background-color: #ff6b81; /* Lighter color on hover */
+    background-color: #8bc9a7; /* Lighter color on hover */
+  }
+
+  .tipsList {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 0; /* Remove left padding */
+    margin: 20px 0; /* Space above and below the list */
+    font-family: Arial, sans-serif; /* Set font family */
+    font-size: 16px; /* Set font size */
+    color: #333; /* Text color */
+  }
+  
+  .tipsList li {
+    margin-bottom: 10px; /* Space between list items */
+    line-height: 1.5; /* Increase line height for readability */
+    position: relative; /* Position for custom bullet styling */
+    padding-left: 25px; /* Space between custom bullet and text */
+  }
+  
+  .tipsList li:before {
+    content: "✓"; /* Custom bullet symbol */
+    position: absolute;
+    left: 0; /* Positioning bullet to the left */
+    color: green; /* Bullet color */
+    font-size: 1.2em; /* Bullet size */
+    line-height: 1; /* Align bullet vertically with text */
   }
