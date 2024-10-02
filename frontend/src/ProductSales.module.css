@@ -1,54 +1,116 @@
 .salesContainer {
-	padding: 20px;
-	margin: 0 auto;
-	max-width: 800px;
-	background-color: #f9f9f9;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #d8f3dc; /* Light background for the container */
+    height: 100vh; /* Cover the full height of the viewport */
+    justify-content: flex-start; /* Align content at the top */
+    overflow-y: auto; /* Allow scrolling if content overflows */
   }
   
   .title {
-	text-align: center;
 	font-size: 24px;
-	color: #333;
+	font-weight: bold;
 	margin-bottom: 20px;
+	text-align: center;
+	color: #333;
+  }
+  
+  .productInfo {
+	border: 1px solid #ddd;
+	padding: 15px;
+	border-radius: 5px;
+	background-color: #fff;
+	margin-bottom: 20px;
+	text-align: center;
+  }
+  
+  .productImage {
+	max-width: 100%;
+	height: auto;
+	border-radius: 5px;
+	margin-bottom: 10px;
+  }
+  
+  .productInfo p {
+	margin: 5px 0;
+	font-size: 16px;
+	color: #555;
   }
   
   .salesTable {
-	width: 100%;
-	border-collapse: collapse;
+	width: 100%; /* Full width of the parent container */
+	border-collapse: collapse; /* Collapse borders */
+	margin-top: 20px; /* Space above the table */
   }
   
   .salesTable th,
   .salesTable td {
-	padding: 12px 15px;
-	border: 1px solid #ddd;
-	text-align: left;
+	padding: 12px 15px; /* Padding for cells */
+	border: 1px solid #ddd; /* Light border */
+	text-align: left; /* Left align text */
   }
   
   .salesTable th {
-	background-color: #4caf50;
-	color: white;
+	background-color: #4caf50; /* Green background for the header */
+	color: white; /* White text color */
+	font-weight: bold; /* Bold text */
+	font-size: 16px; /* Font size */
   }
   
-  .salesTable tr:nth-child(even) {
-	background-color: #f2f2f2;
+  .salesTable tbody tr {
+	transition: background-color 0.3s; /* Smooth transition for hover */
   }
   
-  .salesTable tr:hover {
-	background-color: #ddd;
+  .salesTable tbody tr:hover {
+	background-color: #f1f1f1; /* Light gray background on hover */
   }
   
-  .salesTable td {
-	text-align: center;
+  .salesTable tbody tr:nth-child(odd) {
+	background-color: #f9f9f9; /* Light background for odd rows */
   }
   
-  @media (max-width: 600px) {
+  .salesTable tbody tr:nth-child(even) {
+	background-color: #ffffff; /* White background for even rows */
+  }
+  
+  /* Optional: Add media queries for responsive design */
+  @media (max-width: 768px) {
 	.salesTable {
-	  font-size: 14px;
+	  font-size: 14px; /* Adjust font size for smaller screens */
 	}
   
-	.title {
-	  font-size: 20px;
+	.salesTable th,
+	.salesTable td {
+	  padding: 10px; /* Reduce padding on smaller screens */
 	}
+  }
+
+  .backButtonContainer {
+	position: absolute; /* Position it absolutely */
+	top: 20px; /* Distance from the top */
+	left: 20px; /* Distance from the left */
+	z-index: 10; /* Ensure it appears above other elements */
+  }
+  
+  .backButton {
+	background-color: #4caf50; /* Green background */
+	color: white; /* White text */
+	border: none; /* No border */
+	padding: 10px 15px; /* Padding */
+	border-radius: 5px; /* Rounded corners */
+	font-size: 16px; /* Font size */
+	cursor: pointer; /* Pointer cursor */
+	display: flex; /* Flex display for icon alignment */
+	align-items: center; /* Center items vertically */
+  }
+  
+  .arrowIcon {
+	margin-right: 8px; /* Space between the icon and the text */
+	font-size: 16px; /* Size of the arrow icon */
+  }
+  
+  .backButton:hover {
+	background-color: #45a049; /* Darker green on hover */
   }

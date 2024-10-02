@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import styles from "./ProductSales.module.css"; // Import your CSS module
+import styles from "./ProductSales.module.css"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"; // Import the arrow icon
 
 const ProductSales = () => {
   const { productId } = useParams(); // Get the productId from the route
+  const location = useLocation(); // Get location to access state
+  const { image, description, salePrice } = location.state || {}; // Destructure product details from state
   const [salesData, setSalesData] = useState([]);
   
   // Get user role from local storage
   const user = JSON.parse(localStorage.getItem("user")); // Get user from local storage
   const userRole = user?.role; // Extract user role
+
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const fetchSalesData = async () => {
@@ -34,7 +40,22 @@ const ProductSales = () => {
 
   return (
     <div className={styles.salesContainer}>
-      <h2 className={styles.title}>Sales Data for Product {productId}</h2>
+    <div className={styles.backButtonContainer}>
+      <button
+        onClick={() => navigate("/home")}
+        className={styles.backButton}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} className={styles.arrowIcon} />
+        Back to Home
+      </button>
+    </div>
+      {image && (
+        <div className={styles.productInfo}>
+          <img src={image} alt={description} className={styles.productImage} />
+          <p>{description}</p>
+          <p><strong>Sale Price:</strong> ${salePrice}</p>
+        </div>
+      )}
       <table className={styles.salesTable}>
         <thead>
           <tr>

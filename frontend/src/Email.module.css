@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 50px; /* Space below the logo */
-	margin-left: 70px;
+    margin-left: 70px;
 }
 
 .logoSquare {
@@ -42,13 +42,8 @@
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Slight text shadow for better readability */
 }
 
-.boldText {
-    font-size: 28px; /* Customize font size */
-    font-weight: 700; /* Bold text */
-    color: #2f4f4f; /* Dark color for text */
-}
-
-.successMessage, .errorMessage {
+.successMessage,
+.errorMessage {
     margin: 10px 0; /* Spacing between messages */
     text-align: center; /* Center the messages */
 }
@@ -70,19 +65,21 @@
 }
 
 .inputField {
-    padding: 10px; /* Padding inside input */
+    padding: 15px; /* Reduced padding for smaller input */
     border: 1px solid #ccc; /* Light border */
     border-radius: 5px; /* Rounded corners */
     width: 100%; /* Full width input */
+    font-size: 14px; /* Font size adjustment */
 }
 
 .resetButton {
-    padding: 10px; /* Padding inside button */
+    padding: 10px; /* Reduced padding inside button for smaller size */
     background-color: #4CAF50; /* Button color */
     color: white; /* Text color */
     border: none; /* No border */
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer on hover */
+    font-size: 14px; /* Font size adjustment */
 }
 
 .resetButton:hover {

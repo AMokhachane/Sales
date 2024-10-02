@@ -64,8 +64,14 @@ const Product = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleProductClick = (productId) => {
-    navigate(`/product-sales/${productId}`);
+  const handleProductClick = (product) => {
+    navigate(`/product-sales/${product.id}`, {
+      state: {
+        image: product.image,
+        description: product.description,
+        salePrice: product.salePrice,
+      },
+    });
   };
 
   // Retrieve user info from local storage
@@ -114,10 +120,10 @@ const Product = () => {
         <div className={ProductCSS.productList}>
           {currentProducts.map((product) => (
             <div
-              key={product.id}
-              className={ProductCSS.productCard}
-              onClick={() => handleProductClick(product.id)}
-            >
+            key={product.id}
+            className={ProductCSS.productCard}
+            onClick={() => handleProductClick(product)}
+          >
               <img
                 src={product.image}
                 alt={product.description}
