@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import ProductCSS from "./Product.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAppleAlt, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faUser, faSignOutAlt, faShoppingCart  } from "@fortawesome/free-solid-svg-icons";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -12,9 +12,14 @@ const Product = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const productsPerPage = 4;
+	const [cartCount, setCartCount] = useState(0);
+  const productsPerPage = 8;
 
   const navigate = useNavigate();
+
+	const addToCart = () => {
+    setCartCount(cartCount + 1);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +86,17 @@ const Product = () => {
 
   return (
     <div className={ProductCSS.productContainer}>
+      <div className={ProductCSS.UserContainer}>
+        <h2 className={ProductCSS.welcomeMessage}>
+          Welcome, you are logged in as{" "}
+        </h2>
+
+        <div className={ProductCSS.profilePictureContainer}>
+          <FontAwesomeIcon icon={faUser} className={ProductCSS.userIcon} />
+        </div>
+        <span className={ProductCSS.userRole}>{userRole}</span>
+        <p className={ProductCSS.userEmail}>{userEmail}</p>
+      </div>
       <div className={ProductCSS.left}>
         <div className={ProductCSS.searchContainer}>
           <input
@@ -95,24 +111,7 @@ const Product = () => {
           />
         </div>
 
-        <div className={ProductCSS.filterContainer}>
-          <h3 className={ProductCSS.filterTitle}>Filter by Category</h3>
-          <select
-            value={selectedCategory}
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
-              setCurrentPage(1);
-            }}
-            className={ProductCSS.categorySelect}
-          >
-            <option value="">All Categories</option>
-            {categories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+        
 
         <div className={ProductCSS.productList}>
           {currentProducts.map((product) => (
@@ -153,30 +152,6 @@ const Product = () => {
             </button>
           ))}
         </div>
-
-        <div className={ProductCSS.rightSide}>
-          <h2 className={ProductCSS.welcomeMessage}>
-            Welcome, you are logged in as{" "}
-          </h2>
-
-          <div className={ProductCSS.userInfo}>
-            <div className={ProductCSS.profilePictureContainer}>
-              <FontAwesomeIcon icon={faUser} className={ProductCSS.userIcon} />
-            </div>
-            <span className={ProductCSS.userRole}>{userRole}</span>
-            <p className={ProductCSS.userEmail}>{userEmail}</p>
-          </div>
-
-          <button
-            className={ProductCSS.logoutButton}
-            onClick={() => {
-              localStorage.removeItem("user");
-              navigate("/");
-            }}
-          >
-            Logout
-          </button>
-        </div>
       </div>
 
       <div className={ProductCSS.leftSide}>
@@ -186,7 +161,11 @@ const Product = () => {
           </div>
           <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
         </div>
-
+{/* Shopping Cart Icon */}
+<div className={ProductCSS.cartContainer}>
+        <FontAwesomeIcon icon={faShoppingCart} size="2x" />
+        <span className={ProductCSS.cartCount}>{cartCount}</span>
+      </div>
         <div className={ProductCSS.priceContainer}>
           <h3 className={ProductCSS.filterTitle}>Filter by Price</h3>
           <select
@@ -204,6 +183,25 @@ const Product = () => {
           </select>
         </div>
 
+        <div className={ProductCSS.filterContainer}>
+          <h3 className={ProductCSS.filterTitle}>Filter by Category</h3>
+          <select
+            value={selectedCategory}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setCurrentPage(1);
+            }}
+            className={ProductCSS.categorySelect}
+          >
+            <option value="">All Categories</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className={ProductCSS.tipsContainer}>
           <h3 className={ProductCSS.tipsTitle}>
             Tips for Picking Fresh Fruits & Veggies
@@ -216,6 +214,18 @@ const Product = () => {
             <li>Avoid any items with mold, blemishes, or wrinkled skin.</li>
           </ul>
         </div>
+				<button
+            className={ProductCSS.logoutButton}
+            onClick={() => {
+              localStorage.removeItem("user"); 
+              navigate("/"); 
+              localStorage.removeItem("user");
+              navigate("/");
+            }}
+          >
+						 <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: "8px" }} />
+            Logout
+          </button>
       </div>
     </div>
   );

@@ -8,17 +8,6 @@
     justify-content: flex-start;
     overflow-y: auto; 
 }
-.rightSide {
-    background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2);
-    padding: 10px; 
-    border-radius: 10px; 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-    width: 300px; 
-    position: absolute;
-    right: 20px; 
-    height: 100%;
-    
-}
 
 .leftSide {
     background: linear-gradient(135deg, #c2f5b2, #4CAF50, #393a01);
@@ -51,14 +40,21 @@
 
 .filterContainer {
    
-    margin-left: 300px;
-    margin-top: -100px;
+    margin-left: 150px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.priceContainer{
+    margin-left: 150px;
+    margin-top: 0px;
     margin-bottom: 20px;
 }
 
 .searchContainer{
-    margin-top: 40px;
-    margin-right: 350px;
+    margin-top: 0px;
+    margin-right: 400px;
+    
 }
 
 .filterTitle {
@@ -71,12 +67,13 @@
     font-size: 24px;
     color: #20682b; 
     margin-bottom: 10px;
+    margin-top: 100px;
 }
 
 .categorySelect {
     padding: 10px;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 2px solid #2aaa0a;
     font-size: 16px;
     width: 200px; 
 }
@@ -84,15 +81,18 @@
 .priceSelect{
     padding: 10px;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 2px solid #08aa2b;
     font-size: 16px;
     width: 200px; 
 }
 
 .productList {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px; 
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(2, auto); 
+    gap: 30px;
+    margin-top: 15px;
+    margin-left: 400px;
 }
 
 .productCard {
@@ -140,7 +140,8 @@
 .pagination {
     display: flex;
     justify-content: center; 
-    margin-top: 20px; 
+    margin-top: 20px;
+    margin-left: 250px; 
 }
 
 .pageButton {
@@ -201,82 +202,54 @@
 }
 
 .userInfo {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-    position: absolute; 
-    top: 20px; 
-    right: 20px; 
-    margin: 0; 
-}
+    
+    flex-direction: row; 
+    align-items: start; 
+    
+  }
 
-.profilePictureContainer {
-    width: 200px; 
-    height: 200px; 
-    border-radius: 50%; 
-    background-color: lightgrey; 
-    display: flex;
-    justify-content: center;
+  .UserContainer {
+    background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    position: absolute;
+    right: 20px;
+    display: flex; 
     align-items: center;
-    margin-bottom: 20px; 
-    margin-right: 50px;
-    margin-top: 120px; 
-}
-  .userIcon {
-    font-size: 100px; 
-    color: #2f4f4f; 
+    gap: 10px; 
+    height: auto; 
   }
-  
-  .userInfo {
-    
-    flex-direction: column; 
-    align-items: center; 
-    
-  }
-  
-  
   
   .welcomeMessage {
-    font-size: 30px; 
-    color: rgb(155, 241, 181); 
-    margin-bottom: 10px; 
-    font-family: 'YourLogoFont', sans-serif; 
+    margin: 0;
+    padding: 0 5px;
   }
   
   .userRole {
-    font-weight: bold; 
-    color: rgb(155, 241, 181); 
-    font-family: 'YourLogoFont', sans-serif; 
-    margin-right: 40px; 
-    font-size: 20px;
+    margin: 0;
+    padding: 0 5px;
   }
-
+  
   .userEmail {
-    font-size: 20px; 
-    font-weight: bold; 
-    margin-top: 10px; 
-    text-align: center; 
-    color: rgb(155, 241, 181);
-    margin-right: 40px;
+    margin: 0;
+    padding: 0 5px;
   }
   
+  .profilePictureContainer {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .userIcon {
+    width: 40%;
+    height: auto;
+  }
 
-  .logoutButton {
-    margin-top: 750px;
-    padding: 10px 20px; 
-    font-size: 16px; 
-    color: white; 
-    background-color: #2f4f4f;
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-    margin-left: 210px;
-  }
-  
-  .logoutButton:hover {
-    background-color: #8bc9a7; 
-  }
 
   .tipsList {
     list-style-type: none; 
@@ -284,7 +257,8 @@
     margin: 20px 0; 
     font-family: Arial, sans-serif; 
     font-size: 16px; 
-    color: #333; 
+    color: #333;
+    
   }
   
   .tipsList li {
@@ -302,3 +276,17 @@
     font-size: 1.2em; 
     line-height: 1; 
   }
+
+	.logoutButton{
+    padding: 10px 20px; 
+    font-size: 16px; 
+    color: white; 
+    background-color: #2f4f4f;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+		margin-top: 190px;
+		margin-left: 20px;
+    
+	}
