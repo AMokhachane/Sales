@@ -13,6 +13,7 @@ const Product = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 	const [cart, setCart] = useState([]);
+	const conversionRate = 18; // Example conversion rate: 1 USD = 18 Rands
   const productsPerPage = 8;
 
   const navigate = useNavigate();
@@ -132,9 +133,10 @@ const Product = () => {
               <p className={ProductCSS.productCategory}>
                 Category: {product.category}
               </p>
-              <p className={ProductCSS.productPrice}>
-                Sale Price: ${product.salePrice}
-              </p>
+							{/* converting the dollar to south african rands */}
+              <p className={ProductCSS.productPrice}> 
+  Sale Price: R{(product.salePrice * conversionRate).toFixed(2)} 
+</p>
               <button
                 className={ProductCSS.addToCartButton}
                 onClick={() => addToCart(product)}
