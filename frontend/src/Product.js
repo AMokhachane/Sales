@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import ProductCSS from "./Product.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAppleAlt, faUser, faSignOutAlt, faShoppingCart  } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faUser, faSignOutAlt, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -12,14 +12,16 @@ const Product = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-	const [cartCount, setCartCount] = useState(0);
+	const [cart, setCart] = useState([]);
   const productsPerPage = 8;
 
   const navigate = useNavigate();
 
-	const addToCart = () => {
-    setCartCount(cartCount + 1);
+  const addToCart = (product) => {
+    setCart((prevCart) => [...prevCart, product]);
   };
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,19 +113,17 @@ const Product = () => {
           />
         </div>
 
-        
-
         <div className={ProductCSS.productList}>
           {currentProducts.map((product) => (
             <div
               key={product.id}
               className={ProductCSS.productCard}
-              onClick={() => handleProductClick(product)}
             >
               <img
                 src={product.image}
                 alt={product.description}
                 className={ProductCSS.productImage}
+                onClick={() => handleProductClick(product)}
               />
               <h3 className={ProductCSS.productName}>{product.name}</h3>
               <p className={ProductCSS.productDescription}>
@@ -135,6 +135,12 @@ const Product = () => {
               <p className={ProductCSS.productPrice}>
                 Sale Price: ${product.salePrice}
               </p>
+              <button
+                className={ProductCSS.addToCartButton}
+                onClick={() => addToCart(product)}
+              >
+                Add to Cart
+              </button>
             </div>
           ))}
         </div>
@@ -161,11 +167,21 @@ const Product = () => {
           </div>
           <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
         </div>
-{/* Shopping Cart Icon */}
-<div className={ProductCSS.cartContainer}>
-        <FontAwesomeIcon icon={faShoppingCart} size="2x" />
-        <span className={ProductCSS.cartCount}>{cartCount}</span>
-      </div>
+        
+        
+        <div className={ProductCSS.cartContainer}>
+  <FontAwesomeIcon icon={faShoppingCart} size="2x" />
+  <p className={ProductCSS.totalItemsText}>Total items in cart: {cart.length}</p>
+  <button
+    className={ProductCSS.goToCartButton}
+    onClick={() => navigate("/cart")}
+  >
+    Go to Cart
+  </button>
+</div>
+
+        
+
         <div className={ProductCSS.priceContainer}>
           <h3 className={ProductCSS.filterTitle}>Filter by Price</h3>
           <select
@@ -214,18 +230,16 @@ const Product = () => {
             <li>Avoid any items with mold, blemishes, or wrinkled skin.</li>
           </ul>
         </div>
-				<button
-            className={ProductCSS.logoutButton}
-            onClick={() => {
-              localStorage.removeItem("user"); 
-              navigate("/"); 
-              localStorage.removeItem("user");
-              navigate("/");
-            }}
-          >
-						 <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: "8px" }} />
-            Logout
-          </button>
+        <button
+          className={ProductCSS.logoutButton}
+          onClick={() => {
+            localStorage.removeItem("user"); 
+            navigate("/"); 
+          }}
+        >
+          <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: "8px" }} />
+          Logout
+        </button>
       </div>
     </div>
   );
