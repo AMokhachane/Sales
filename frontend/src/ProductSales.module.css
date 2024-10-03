@@ -9,83 +9,79 @@
     overflow-y: auto; 
   }
   
-  .title {
-	font-size: 24px;
-	font-weight: bold;
-	margin-bottom: 20px;
-	text-align: center;
-	color: #333;
-  }
-  
   .productInfo {
 	border: 1px solid #ddd;
 	padding: 15px;
-	border-radius: 5px;
+	border-radius: 30px;
 	background-color: #fff;
 	margin-bottom: 20px;
+	margin-top: 50px;
 	text-align: center;
+	margin-right: 1300px;
   }
   
   .productImage {
 	max-width: 100%;
 	height: auto;
-	border-radius: 5px;
+	border-radius: 50px;
 	margin-bottom: 10px;
   }
   
   .productInfo p {
 	margin: 5px 0;
 	font-size: 16px;
-	color: #555;
+	color: #39b31b;
   }
   
   .salesTable {
-	width: 100%; 
-	border-collapse: collapse; 
-	margin-top: 20px; 
-  }
-  
-  .salesTable th,
-  .salesTable td {
-	padding: 12px 15px; 
-	border: 1px solid #ddd; 
-	text-align: left; 
-  }
-  
-  .salesTable th {
-	background-color: #4caf50; 
-	color: white; 
-	font-weight: bold; 
-	font-size: 16px; 
-  }
-  
-  .salesTable tbody tr {
-	transition: background-color 0.3s; 
-  }
-  
-  .salesTable tbody tr:hover {
-	background-color: #f1f1f1; 
-  }
-  
-  .salesTable tbody tr:nth-child(odd) {
-	background-color: #f9f9f9; 
-  }
-  
-  .salesTable tbody tr:nth-child(even) {
-	background-color: #ffffff; 
-  }
-  
-  
-  @media (max-width: 768px) {
-	.salesTable {
-	  font-size: 14px;
+		border-collapse: collapse; /* Remove space between cells */
+		width: 400px; /* Full width */
+		margin-top: -500px; /* Space above the table */
+		margin-left: 1400px;
 	}
-  
+	
 	.salesTable th,
 	.salesTable td {
-	  padding: 10px; 
+		padding: 5px; /* Reduce padding for more compactness */
+		text-align: left; /* Align text to the left */
+		border: 1px solid #ccc; /* Add border for clarity */
+		height: 20px; /* Set a fixed height for rows */
 	}
-  }
+	
+	.salesTable th {
+		background-color: #f2f2f2; /* Light background for headers */
+		font-weight: bold; /* Make headers bold */
+	}
+	
+	/* Adjust hover effects and odd/even row coloring */
+	.salesTable tbody tr {
+		transition: background-color 0.3s; 
+	}
+	
+	.salesTable tbody tr:hover {
+		background-color: #f1f1f1; 
+	}
+	
+	.salesTable tbody tr:nth-child(odd) {
+		background-color: #f9f9f9; 
+	}
+	
+	.salesTable tbody tr:nth-child(even) {
+		background-color: #ffffff; 
+	}
+	
+	/* Responsive design for smaller screens */
+	@media (max-width: 768px) {
+		.salesTable {
+			font-size: 12px; /* Smaller font size */
+		}
+	
+		.salesTable th,
+		.salesTable td {
+			padding: 5px; /* Reduced padding */
+			height: 25px; /* Smaller row height */
+		}
+	}
 
   .backButtonContainer {
 	position: absolute; 
@@ -114,3 +110,25 @@
   .backButton:hover {
 	background-color: #45a049; 
   }
+
+	.chartContainer {
+		display: flex;
+		flex-direction: column;
+		align-items: center; /* Center align the chart horizontally */
+		margin-bottom: 20px; /* Add space below the chart */
+		margin-top: -600px;
+	}
+	
+	.chartContainer h3 {
+		margin: 10px 0; /* Add some spacing around the heading */
+	}
+
+	.pagination {
+		margin-top: 10px; /* Space between table and buttons */
+		text-align: center; /* Center the pagination */
+	}
+	
+	.pagination button {
+		margin: 0 5px; /* Space between buttons */
+	}
+	
