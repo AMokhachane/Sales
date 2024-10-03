@@ -3,10 +3,10 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #d8f3dc; /* Light background for the container */
-    height: 100vh; /* Cover the full height of the viewport */
-    justify-content: flex-start; /* Align content at the top */
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    background-color: #d8f3dc; 
+    height: 100vh; 
+    justify-content: flex-start; 
+    overflow-y: auto; 
   }
   
   .title {
@@ -40,77 +40,77 @@
   }
   
   .salesTable {
-	width: 100%; /* Full width of the parent container */
-	border-collapse: collapse; /* Collapse borders */
-	margin-top: 20px; /* Space above the table */
+	width: 100%; 
+	border-collapse: collapse; 
+	margin-top: 20px; 
   }
   
   .salesTable th,
   .salesTable td {
-	padding: 12px 15px; /* Padding for cells */
-	border: 1px solid #ddd; /* Light border */
-	text-align: left; /* Left align text */
+	padding: 12px 15px; 
+	border: 1px solid #ddd; 
+	text-align: left; 
   }
   
   .salesTable th {
-	background-color: #4caf50; /* Green background for the header */
-	color: white; /* White text color */
-	font-weight: bold; /* Bold text */
-	font-size: 16px; /* Font size */
+	background-color: #4caf50; 
+	color: white; 
+	font-weight: bold; 
+	font-size: 16px; 
   }
   
   .salesTable tbody tr {
-	transition: background-color 0.3s; /* Smooth transition for hover */
+	transition: background-color 0.3s; 
   }
   
   .salesTable tbody tr:hover {
-	background-color: #f1f1f1; /* Light gray background on hover */
+	background-color: #f1f1f1; 
   }
   
   .salesTable tbody tr:nth-child(odd) {
-	background-color: #f9f9f9; /* Light background for odd rows */
+	background-color: #f9f9f9; 
   }
   
   .salesTable tbody tr:nth-child(even) {
-	background-color: #ffffff; /* White background for even rows */
+	background-color: #ffffff; 
   }
   
-  /* Optional: Add media queries for responsive design */
+  
   @media (max-width: 768px) {
 	.salesTable {
-	  font-size: 14px; /* Adjust font size for smaller screens */
+	  font-size: 14px;
 	}
   
 	.salesTable th,
 	.salesTable td {
-	  padding: 10px; /* Reduce padding on smaller screens */
+	  padding: 10px; 
 	}
   }
 
   .backButtonContainer {
-	position: absolute; /* Position it absolutely */
-	top: 20px; /* Distance from the top */
-	left: 20px; /* Distance from the left */
-	z-index: 10; /* Ensure it appears above other elements */
+	position: absolute; 
+	top: 20px; 
+	left: 20px; 
+	z-index: 10; 
   }
   
   .backButton {
-	background-color: #4caf50; /* Green background */
-	color: white; /* White text */
-	border: none; /* No border */
-	padding: 10px 15px; /* Padding */
-	border-radius: 5px; /* Rounded corners */
-	font-size: 16px; /* Font size */
-	cursor: pointer; /* Pointer cursor */
-	display: flex; /* Flex display for icon alignment */
-	align-items: center; /* Center items vertically */
+	background-color: #4caf50; 
+	color: white; 
+	border: none;
+	padding: 10px 15px;
+	border-radius: 5px;
+	font-size: 16px; 
+	cursor: pointer; 
+	display: flex; 
+	align-items: center; 
   }
   
   .arrowIcon {
-	margin-right: 8px; /* Space between the icon and the text */
-	font-size: 16px; /* Size of the arrow icon */
+	margin-right: 8px;
+	font-size: 16px; 
   }
   
   .backButton:hover {
-	background-color: #45a049; /* Darker green on hover */
+	background-color: #45a049; 
   }

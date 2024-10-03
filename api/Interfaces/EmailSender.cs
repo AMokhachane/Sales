@@ -7,13 +7,13 @@ using Microsoft.Extensions.Logging;
 
 namespace api.Interfaces
 {
-    // Define the interface for sending emails
+
     public interface ISenderEmail
     {
         Task SendEmailAsync(string toEmail, string subject, string body, bool isBodyHtml = false);
     }
 
-    // EmailSender class that implements ISenderEmail
+
     public class EmailSender : ISenderEmail
     {
         private readonly SmtpClient _smtpClient;

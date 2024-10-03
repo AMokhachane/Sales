@@ -3,92 +3,92 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh; /* Full height */
-    width: 100%; /* Full width */
-    background-color: #f9f9f9; /* Light background */
+    height: 100vh; 
+    width: 100%;
+    background-color: #f9f9f9; 
 }
 
 .logoContainer {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the logo and form */
-    width: 100%; /* Full width */
-    padding: 20px; /* Padding for spacing */
+    align-items: center; 
+    width: 100%; 
+    padding: 20px; 
 }
 
 .logo {
     display: flex;
     align-items: center;
-    margin-bottom: 50px; /* Space below the logo */
+    margin-bottom: 50px; 
     margin-left: 70px;
 }
 
 .logoSquare {
-    width: 80px; /* Adjusted width */
-    height: 80px; /* Adjusted height */
-    background-color: #d8f3dc; /* Light green background to represent freshness */
-    margin-right: 15px; /* Spacing between the icon and text */
-    border-radius: 10px; /* Rounded corners */
+    width: 80px; 
+    height: 80px; 
+    background-color: #d8f3dc; 
+    margin-right: 15px; 
+    border-radius: 10px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .boldText {
-    font-size: 28px; /* Increased font size for better visibility */
-    font-weight: 700; /* Bold text */
-    color: #2f4f4f; /* Dark slate color for text */
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Slight text shadow for better readability */
+    font-size: 28px; 
+    font-weight: 700; 
+    color: #2f4f4f; 
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); 
 }
 
 .successMessage,
 .errorMessage {
-    margin: 10px 0; /* Spacing between messages */
-    text-align: center; /* Center the messages */
+    margin: 10px 0; 
+    text-align: center; 
 }
 
 .form {
     display: flex;
-    flex-direction: column; /* Vertical alignment */
-    width: 100%; /* Full width for form */
-    max-width: 400px; /* Optional max width */
+    flex-direction: column; 
+    width: 100%; 
+    max-width: 400px; 
 }
 
 .formGroup {
-    margin-bottom: 20px; /* Spacing between form fields */
+    margin-bottom: 20px; 
 }
 
 .label {
-    font-weight: bold; /* Bold label */
-    margin-bottom: 5px; /* Space below the label */
+    font-weight: bold; 
+    margin-bottom: 5px; 
 }
 
 .inputField {
-    padding: 15px; /* Reduced padding for smaller input */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px; /* Rounded corners */
-    width: 100%; /* Full width input */
-    font-size: 14px; /* Font size adjustment */
+    padding: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    width: 100%; 
+    font-size: 14px; 
 }
 
 .resetButton {
-    padding: 10px; /* Reduced padding inside button for smaller size */
-    background-color: #4CAF50; /* Button color */
-    color: white; /* Text color */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer on hover */
-    font-size: 14px; /* Font size adjustment */
+    padding: 10px; 
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    font-size: 14px; 
 }
 
 .resetButton:hover {
-    background-color: #45a049; /* Darker shade on hover */
+    background-color: #45a049; 
 }
 
-/* Optional media query for responsiveness */
+
 @media (max-width: 600px) {
     .boldText {
-        font-size: 24px; /* Smaller font size on small screens */
+        font-size: 24px;
     }
 }

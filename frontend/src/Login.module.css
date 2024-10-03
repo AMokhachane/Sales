@@ -35,20 +35,20 @@
   .forgotPasswordAndButton {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Creates space between the two elements */
-    width: 65%; /* Adjust as per your layout */
-    margin-top: 20px; /* Space above this div */
-    margin-left: 150px; /* Adjust margin as per your layout */
-    gap: 20px; /* Adds space between the Forgot Password link and the Login button */
+    justify-content: space-between; 
+    width: 65%; 
+    margin-top: 20px; 
+    margin-left: 150px;
+    gap: 20px; 
 }
 
 .forgotPassword {
     color: #20682b;
     text-decoration: none;
     position: absolute;
-    top: 63%; /* Adjust these values as per your layout */
-    left: 400px; /* Adjust horizontal positioning */
-    transform: translateY(-50%); /* To vertically center if needed */
+    top: 63%; 
+    left: 400px; 
+    transform: translateY(-50%); 
 }
 
 .loginButton {
@@ -60,7 +60,7 @@
     border-radius: 5px;
     cursor: pointer;
 	margin-left: 200px;
-    justify-content: center; /* Centers text inside the button */
+    justify-content: center; 
 }
   
   .loginButton:hover {
@@ -77,18 +77,18 @@
   
   .rightSide {
 	width: 35%;
-	background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2); /* Three shades of green */
+	background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2); 
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: relative;
 	color: white;
 	
-	/* To create a curved effect on the right side */
+	
 	border-top-left-radius: 300px; 
 	border-bottom-left-radius: 0px;
 	
-	/* Optional: Add shadow to enhance the effect */
+	
 	box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
   }
   
@@ -116,37 +116,36 @@
   .logo {
     display: flex;
     align-items: center;
-    margin-bottom: 50px; /* Space below the logo */
+    margin-bottom: 50px; 
 	margin-left: 30px;
 }
 
 .logoSquare {
-    width: 80px; /* Adjusted width */
-    height: 80px; /* Adjusted height */
-    background-color: #d8f3dc; /* Light green background to represent freshness */
-    margin-right: 15px; /* Spacing between the icon and text */
-    border-radius: 10px; /* Rounded corners */
+    width: 80px; 
+    height: 80px; 
+    background-color: #d8f3dc; 
+    margin-right: 15px; 
+    border-radius: 10px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .boldText {
-    font-size: 28px; /* Increased font size for better visibility */
-    font-weight: 700; /* Bold text */
-    color: #2f4f4f; /* Dark slate color for text */
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Slight text shadow for better readability */
+    font-size: 28px; 
+    font-weight: 700; 
+    color: #2f4f4f; 
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); 
 }
 
-/* Optional media query for responsiveness */
 @media (max-width: 600px) {
     .boldText {
-        font-size: 24px; /* Slightly smaller font size on smaller screens */
+        font-size: 24px; 
     }
 
     .logoSquare {
-        width: 60px; /* Smaller icon */
-        height: 60px; /* Smaller icon */
+        width: 60px; 
+        height: 60px; 
     }
 }

@@ -3,19 +3,19 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #d8f3dc; /* Light background for the container */
-    height: 100vh; /* Cover the full height of the viewport */
-    justify-content: flex-start; /* Align content at the top */
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    background-color: #d8f3dc; 
+    height: 100vh; 
+    justify-content: flex-start;
+    overflow-y: auto; 
 }
 .rightSide {
     background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2);
-    padding: 10px; /* Padding around the content */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    width: 300px; /* Set width for the right side section */
+    padding: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    width: 300px; 
     position: absolute;
-    right: 20px; /* Distance from the right edge */
+    right: 20px; 
     height: 100%;
     
 }
@@ -37,15 +37,15 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #d8f3dc; /* Light background for the container */
+    background-color: #d8f3dc; 
     height: 100vh;
-    justify-content: flex-start; /* Align content at the top */
+    justify-content: flex-start; 
    
 }
 
 .title {
     font-size: 36px;
-    color: #2f4f4f; /* Match with your login page color */
+    color: #2f4f4f; 
     margin-bottom: 20px;
 }
 
@@ -63,13 +63,13 @@
 
 .filterTitle {
     font-size: 24px;
-    color: #20682b; /* Consistent with login page theme */
+    color: #20682b; 
     margin-bottom: 10px;
 }
 
 .tipsTitle{
     font-size: 24px;
-    color: #20682b; /* Consistent with login page theme */
+    color: #20682b; 
     margin-bottom: 10px;
 }
 
@@ -78,7 +78,7 @@
     border-radius: 20px;
     border: 1px solid #ccc;
     font-size: 16px;
-    width: 200px; /* Set a width for the select box */
+    width: 200px; 
 }
 
 .priceSelect{
@@ -86,32 +86,32 @@
     border-radius: 20px;
     border: 1px solid #ccc;
     font-size: 16px;
-    width: 200px; /* Set a width for the select box */
+    width: 200px; 
 }
 
 .productList {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns of equal width */
-    gap: 20px; /* Space between product cards */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
 }
 
 .productCard {
-    background-color: #ffffff; /* Card background */
-    border-radius: 10px; /* Rounded corners */
-    padding: 15px; /* Inner padding */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    text-align: center; /* Center the text */
-    height: 300px; /* Set a fixed height for uniformity */
-    display: flex; /* Use Flexbox for layout */
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: space-between; /* Space elements evenly */
+    background-color: #ffffff; 
+    border-radius: 10px;
+    padding: 15px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    text-align: center; 
+    height: 300px;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
 }
 
 .productImage {
     max-width: 100%;
-    height: 150px; /* Set a fixed height for images */
-    border-radius: 10px; /* Rounded image corners */
-    object-fit: cover; /* Ensure the image covers the space without distortion */
+    height: 150px; 
+    border-radius: 10px; 
+    object-fit: cover; 
 }
 
 .productName {
@@ -123,108 +123,108 @@
 .productDescription {
     font-size: 14px;
     color: #555;
-    margin-bottom: 5px; /* Margin below description */
+    margin-bottom: 5px; 
 }
 
 .productCategory {
     font-size: 14px;
     color: #555;
-    margin-bottom: 10px; /* Margin below category */
+    margin-bottom: 10px; 
 }
 
 .productPrice {
     font-weight: bold;
-    color: #4CAF50; /* Green color for sale price */
+    color: #4CAF50; 
 }
 
 .pagination {
     display: flex;
-    justify-content: center; /* Center the pagination controls */
-    margin-top: 20px; /* Space above pagination */
+    justify-content: center; 
+    margin-top: 20px; 
 }
 
 .pageButton {
-    margin: 0 5px; /* Space between buttons */
-    padding: 10px 15px; /* Button padding */
+    margin: 0 5px; 
+    padding: 10px 15px; 
     border: none;
-    border-radius: 5px; /* Rounded corners */
-    background-color: #20682b; /* Background color */
-    color: white; /* Text color */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth background transition */
+    border-radius: 5px; 
+    background-color: #20682b; 
+    color: white; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
 }
 
 .pageButton:hover {
-    background-color: #4CAF50; /* Change background on hover */
+    background-color: #4CAF50; 
 }
 
 .active {
-    background-color: #4CAF50; /* Active page button color */
-    font-weight: bold; /* Bold font for active page */
+    background-color: #4CAF50; 
+    font-weight: bold; 
 }
 
 .searchContainer {
-    margin-bottom: 20px; /* Space below the search bar */
+    margin-bottom: 20px; 
 }
 
 .searchInput {
-    padding: 10px; /* Inner padding */
-    border-radius: 5px; /* Rounded corners */
-    border: 1px solid #ccc; /* Border */
-    font-size: 16px; /* Font size */
-    width: 300px; /* Width of the search input */
+    padding: 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    font-size: 16px; 
+    width: 300px; 
 }
 
 .logo {
     display: flex;
     align-items: center;
-    margin-bottom: 50px; /* Space below the logo */
+    margin-bottom: 50px; 
 }
 
 .logoSquare {
-    width: 80px; /* Adjusted width */
-    height: 80px; /* Adjusted height */
-    background-color: #d8f3dc; /* Light green background to represent freshness */
-    margin-right: 15px; /* Spacing between the icon and text */
-    border-radius: 10px; /* Rounded corners */
+    width: 80px; 
+    height: 80px; 
+    background-color: #d8f3dc; 
+    margin-right: 15px; 
+    border-radius: 10px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .boldText {
-    font-size: 28px; /* Increased font size for better visibility */
-    font-weight: 700; /* Bold text */
-    color: #2f4f4f; /* Dark slate color for text */
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Slight text shadow for better readability */
+    font-size: 28px; 
+    font-weight: 700; 
+    color: #2f4f4f; 
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .userInfo {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Align to the right */
-    position: absolute; /* Make it absolute to position it relative to the container */
-    top: 20px; /* Distance from the top */
-    right: 20px; /* Distance from the right */
-    margin: 0; /* Remove margin to avoid extra spacing */
+    justify-content: flex-end; 
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    margin: 0; 
 }
 
 .profilePictureContainer {
-    width: 200px; /* Adjust size as needed */
-    height: 200px; /* Adjust size as needed */
-    border-radius: 50%; /* Make it round */
-    background-color: lightgrey; /* Optional: background color */
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    background-color: lightgrey; 
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px; /* Space below the profile picture */
+    margin-bottom: 20px; 
     margin-right: 50px;
-    margin-top: 120px; /* Add space above the profile picture */
+    margin-top: 120px; 
 }
   .userIcon {
-    font-size: 100px; /* Adjust icon size as needed */
-    color: #2f4f4f; /* Color of the icon */
+    font-size: 100px; 
+    color: #2f4f4f; 
   }
   
   .userInfo {
@@ -237,68 +237,68 @@
   
   
   .welcomeMessage {
-    font-size: 30px; /* Adjust font size as needed */
-    color: rgb(155, 241, 181); /* Set the text color to green */
-    margin-bottom: 10px; /* Space below the welcome message */
-    font-family: 'YourLogoFont', sans-serif; /* Replace with the font used in the logo */
+    font-size: 30px; 
+    color: rgb(155, 241, 181); 
+    margin-bottom: 10px; 
+    font-family: 'YourLogoFont', sans-serif; 
   }
   
   .userRole {
-    font-weight: bold; /* Make the user role bold */
-    color: rgb(155, 241, 181); /* Set the user role color to green */
-    font-family: 'YourLogoFont', sans-serif; /* Ensure the same font is used */
-    margin-right: 40px; /* Remove default margin */
+    font-weight: bold; 
+    color: rgb(155, 241, 181); 
+    font-family: 'YourLogoFont', sans-serif; 
+    margin-right: 40px; 
     font-size: 20px;
   }
 
   .userEmail {
-    font-size: 20px; /* Adjust font size for email */
-    font-weight: bold; /* Make email bold */
-    margin-top: 10px; /* Remove default margin */
-    text-align: center; /* Center the email */
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-top: 10px; 
+    text-align: center; 
     color: rgb(155, 241, 181);
     margin-right: 40px;
   }
   
 
   .logoutButton {
-    margin-top: 750px; /* Space above the button */
-    padding: 10px 20px; /* Button padding */
-    font-size: 16px; /* Font size */
-    color: white; /* Text color */
-    background-color: #2f4f4f; /* Background color */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    margin-top: 750px;
+    padding: 10px 20px; 
+    font-size: 16px; 
+    color: white; 
+    background-color: #2f4f4f;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
     margin-left: 210px;
   }
   
   .logoutButton:hover {
-    background-color: #8bc9a7; /* Lighter color on hover */
+    background-color: #8bc9a7; 
   }
 
   .tipsList {
-    list-style-type: none; /* Remove default bullets */
-    padding-left: 0; /* Remove left padding */
-    margin: 20px 0; /* Space above and below the list */
-    font-family: Arial, sans-serif; /* Set font family */
-    font-size: 16px; /* Set font size */
-    color: #333; /* Text color */
+    list-style-type: none; 
+    padding-left: 0; 
+    margin: 20px 0; 
+    font-family: Arial, sans-serif; 
+    font-size: 16px; 
+    color: #333; 
   }
   
   .tipsList li {
-    margin-bottom: 10px; /* Space between list items */
-    line-height: 1.5; /* Increase line height for readability */
-    position: relative; /* Position for custom bullet styling */
-    padding-left: 25px; /* Space between custom bullet and text */
+    margin-bottom: 10px; 
+    line-height: 1.5; 
+    position: relative; 
+    padding-left: 25px; 
   }
   
   .tipsList li:before {
-    content: "✓"; /* Custom bullet symbol */
+    content: "✓"; 
     position: absolute;
-    left: 0; /* Positioning bullet to the left */
-    color: green; /* Bullet color */
-    font-size: 1.2em; /* Bullet size */
-    line-height: 1; /* Align bullet vertically with text */
+    left: 0; 
+    color: green; 
+    font-size: 1.2em; 
+    line-height: 1; 
   }

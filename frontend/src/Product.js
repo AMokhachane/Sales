@@ -22,7 +22,6 @@ const Product = () => {
         const response = await axios.get("/products");
         setProducts(response.data);
 
-        // Extract unique categories
         const uniqueCategories = [
           ...new Set(response.data.map((product) => product.category)),
         ];
@@ -76,14 +75,13 @@ const Product = () => {
 
   // Retrieve user info from local storage
   const user = JSON.parse(localStorage.getItem("user"));
-  const userRole = user?.role || "Guest"; // Default to "Guest" if not found
-  const userName = user?.userName || "User"; // Default name if not found
-  const userEmail = user?.userEmail || "user@example.com"; // Default email if not found
+  const userRole = user?.role || "Guest";
+  const userName = user?.userName || "User";
+  const userEmail = user?.userEmail || "user@example.com";
 
   return (
     <div className={ProductCSS.productContainer}>
       <div className={ProductCSS.left}>
-        {/* Search Bar */}
         <div className={ProductCSS.searchContainer}>
           <input
             type="text"
@@ -97,7 +95,6 @@ const Product = () => {
           />
         </div>
 
-        {/* Category Filter */}
         <div className={ProductCSS.filterContainer}>
           <h3 className={ProductCSS.filterTitle}>Filter by Category</h3>
           <select
@@ -120,10 +117,10 @@ const Product = () => {
         <div className={ProductCSS.productList}>
           {currentProducts.map((product) => (
             <div
-            key={product.id}
-            className={ProductCSS.productCard}
-            onClick={() => handleProductClick(product)}
-          >
+              key={product.id}
+              className={ProductCSS.productCard}
+              onClick={() => handleProductClick(product)}
+            >
               <img
                 src={product.image}
                 alt={product.description}
@@ -143,7 +140,6 @@ const Product = () => {
           ))}
         </div>
 
-        {/* Pagination Controls */}
         <div className={ProductCSS.pagination}>
           {Array.from({ length: totalPages }, (_, index) => (
             <button
@@ -158,7 +154,6 @@ const Product = () => {
           ))}
         </div>
 
-        {/* Duplicate rightSide container here */}
         <div className={ProductCSS.rightSide}>
           <h2 className={ProductCSS.welcomeMessage}>
             Welcome, you are logged in as{" "}
@@ -172,12 +167,11 @@ const Product = () => {
             <p className={ProductCSS.userEmail}>{userEmail}</p>
           </div>
 
-          {/* Logout Button placed inside the rightSide */}
           <button
             className={ProductCSS.logoutButton}
             onClick={() => {
-              localStorage.removeItem("user"); // Optional: Clear user data
-              navigate("/"); // Navigate to the login page
+              localStorage.removeItem("user");
+              navigate("/");
             }}
           >
             Logout

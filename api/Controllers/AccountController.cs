@@ -46,74 +46,70 @@ namespace api.Controllers
             return confirmationLink.Replace("api/Sales/", "");
         }
 
-        // Endpoint for registering a new user
-[HttpPost("register")]
-public async Task<ActionResult> RegisterUser([FromBody] RegisterDto userDto)
-{
-    try
-    {
-        // Create a new user object
-        AppUser newUser = new AppUser
+        // New user registration
+        [HttpPost("register")]
+        public async Task<ActionResult> RegisterUser([FromBody] RegisterDto userDto)
         {
-            Email = userDto.EmailAddress,
-            UserName = userDto.Username,
-        };
+            try
+            {
 
-        // Create the user in the database
-        var result = await userManager.CreateAsync(newUser, userDto.Password);
+                AppUser newUser = new AppUser
+                {
+                    Email = userDto.EmailAddress,
+                    UserName = userDto.Username,
+                };
 
-        // Check if user creation was successful
-        if (!result.Succeeded)
-        {
-            var errorMessages = result.Errors.Select(e => e.Description).ToList();
-            logger.LogWarning("User registration failed: {Errors}", string.Join(", ", errorMessages));
-            return BadRequest(new { errors = errorMessages });
+
+                var result = await userManager.CreateAsync(newUser, userDto.Password);
+
+
+                if (!result.Succeeded)
+                {
+                    var errorMessages = result.Errors.Select(e => e.Description).ToList();
+                    logger.LogWarning("User registration failed: {Errors}", string.Join(", ", errorMessages));
+                    return BadRequest(new { errors = errorMessages });
+                }
+
+
+                string role = userDto.Role;
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+                await userManager.AddToRoleAsync(newUser, role);
+
+
+                string confirmationLink = await GenerateEmailConfirmationLink(newUser);
+                await SendConfirmationEmail(newUser.Email, confirmationLink);
+
+
+                return Ok(new
+                {
+                    message = "Registered Successfully. Please check your email to confirm your account."
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error occurred during user registration.");
+                return BadRequest(new { message = "Something went wrong, please try again. " + ex.Message });
+            }
         }
 
-        // Assign the role to the user
-        string role = userDto.Role; // Assuming you added Role to your RegisterDto
-        if (!await roleManager.RoleExistsAsync(role))
+
+        private async Task<string> GenerateEmailConfirmationLink(AppUser newUser)
         {
-            // Optionally, create the role if it doesn't exist
-            await roleManager.CreateAsync(new IdentityRole(role));
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
+            var encodedToken = WebUtility.UrlEncode(token);
+            var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { email = newUser.Email, token = encodedToken }, Request.Scheme);
+            return confirmationLink;
         }
-        await userManager.AddToRoleAsync(newUser, role);
 
-        // Generate and send the confirmation email
-        string confirmationLink = await GenerateEmailConfirmationLink(newUser);
-        await SendConfirmationEmail(newUser.Email, confirmationLink);
-
-        // Return simplified success response
-        return Ok(new
+        private async Task SendConfirmationEmail(string email, string confirmationLink)
         {
-            message = "Registered Successfully. Please check your email to confirm your account."
-        });
-    }
-    catch (Exception ex)
-    {
-        logger.LogError(ex, "Error occurred during user registration.");
-        return BadRequest(new { message = "Something went wrong, please try again. " + ex.Message });
-    }
-}
 
-// Helper methods for email confirmation
-private async Task<string> GenerateEmailConfirmationLink(AppUser newUser)
-{
-    var token = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
-    var encodedToken = WebUtility.UrlEncode(token);
-    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { email = newUser.Email, token = encodedToken }, Request.Scheme);
-    return confirmationLink;
-}
 
-private async Task SendConfirmationEmail(string email, string confirmationLink)
-{
-    // string confirmationEmailTemplate = $@"
-    //     <h1>Welcome to Image App Gallery</h1>
-    //     <p>Please click the link below to confirm your email:</p>
-    //     <a href='{confirmationLink}'>Confirm Email</a>
-    // ";
-
-    string confirmationEmailTemplate = $@"
+            string confirmationEmailTemplate = $@"
     <h1>Welcome to FRESH FRUITS & VEGGIES</h1>
     <h3>Hi</h3>
     
@@ -136,10 +132,10 @@ private async Task SendConfirmationEmail(string email, string confirmationLink)
     <p>Best regards,</p>
     <p>The FRESH FRUITS & VEGGIES Team</p>";
 
-    await emailSender.SendEmailAsync(email, "Email Confirmation", confirmationEmailTemplate, true);
-}
+            await emailSender.SendEmailAsync(email, "Email Confirmation", confirmationEmailTemplate, true);
+        }
 
-        // Endpoint to confirm email
+        //confirm email
         [HttpGet("confirmemail")]
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
@@ -171,68 +167,68 @@ private async Task SendConfirmationEmail(string email, string confirmationLink)
             return BadRequest(new { message = "Error confirming your email." });
         }
 
-        // Endpoint to login a user
-       [HttpPost("login")]
-public async Task<ActionResult> LoginUser(Login login)
-{
-    try
-    {
-        // Validate the login model
-        if (!ModelState.IsValid)
+
+        [HttpPost("login")]
+        public async Task<ActionResult> LoginUser(Login login)
         {
-            return BadRequest(ModelState);
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var user = await userManager.FindByEmailAsync(login.Email);
+                if (user == null)
+                {
+                    logger.LogWarning("Login attempt failed for non-existent email {Email}", login.Email);
+                    return BadRequest(new { message = "Please check your credentials and try again." });
+                }
+
+                if (!user.EmailConfirmed)
+                {
+                    logger.LogWarning("Login attempt for unconfirmed email {Email}", login.Email);
+                    return Unauthorized(new { message = "Email not confirmed yet." });
+                }
+
+
+                var result = await signInManager.PasswordSignInAsync(user.UserName, login.Password, isPersistent: false, lockoutOnFailure: true);
+
+                if (result.Succeeded)
+                {
+
+                    var roles = await userManager.GetRolesAsync(user);
+                    logger.LogInformation("User {UserId} logged in successfully", user.Id);
+                    return Ok(new { message = "Login successful.", userEmail = user.Email, userID = user.Id, role = roles.FirstOrDefault() });
+                }
+
+                if (result.RequiresTwoFactor)
+                {
+                    logger.LogWarning("Two-factor authentication required for user {UserId}", user.Id);
+                    return BadRequest(new { message = "Two-factor authentication required." });
+                }
+
+                if (result.IsLockedOut)
+                {
+                    logger.LogWarning("User {UserId} is locked out", user.Id);
+                    return BadRequest(new { message = "Account locked out due to multiple failed login attempts." });
+                }
+
+                logger.LogWarning("Invalid login attempt for user {UserId}", user.Id);
+                return Unauthorized(new { message = "Check your login credentials and try again." });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error occurred during login.");
+                return BadRequest(new { message = "An error occurred. Please try again." });
+            }
         }
-
-        var user = await userManager.FindByEmailAsync(login.Email);
-        if (user == null)
-        {
-            logger.LogWarning("Login attempt failed for non-existent email {Email}", login.Email);
-            return BadRequest(new { message = "Please check your credentials and try again." });
-        }
-
-        if (!user.EmailConfirmed)
-        {
-            logger.LogWarning("Login attempt for unconfirmed email {Email}", login.Email);
-            return Unauthorized(new { message = "Email not confirmed yet." });
-        }
-
-        // Attempt to sign in the user without the Remember parameter
-        var result = await signInManager.PasswordSignInAsync(user.UserName, login.Password, isPersistent: false, lockoutOnFailure: true);
-
-        if (result.Succeeded)
-        {
-            // Retrieve roles for the user
-            var roles = await userManager.GetRolesAsync(user); // Retrieve roles
-            logger.LogInformation("User {UserId} logged in successfully", user.Id);
-            return Ok(new { message = "Login successful.", userEmail = user.Email, userID = user.Id, role = roles.FirstOrDefault() }); // Return the first role
-        }
-
-        if (result.RequiresTwoFactor)
-        {
-            logger.LogWarning("Two-factor authentication required for user {UserId}", user.Id);
-            return BadRequest(new { message = "Two-factor authentication required." });
-        }
-
-        if (result.IsLockedOut)
-        {
-            logger.LogWarning("User {UserId} is locked out", user.Id);
-            return BadRequest(new { message = "Account locked out due to multiple failed login attempts." });
-        }
-
-        logger.LogWarning("Invalid login attempt for user {UserId}", user.Id);
-        return Unauthorized(new { message = "Check your login credentials and try again." });
-    }
-    catch (Exception ex)
-    {
-        logger.LogError(ex, "Error occurred during login.");
-        return BadRequest(new { message = "An error occurred. Please try again." });
-    }
-}
 
         [HttpPost("forgotpassword")]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model)
         {
-            // Find the user by email
+
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
             {
@@ -240,13 +236,13 @@ public async Task<ActionResult> LoginUser(Login login)
                 return BadRequest(new { message = "User with this email does not exist or email is not confirmed." });
             }
 
-            // Generate password reset token
+
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = WebUtility.UrlEncode(token);
             var resetLink = $"http://localhost:3000/password?email={model.Email}&token={encodedToken}";
 
-            // Send the reset password email
-            // Email template for password reset
+
+
             string resetPasswordEmailTemplate = $@"
     <h1>Password reset for FRESH FRUITS & VEGGIES</h1>
     <h3>Hi</h3>

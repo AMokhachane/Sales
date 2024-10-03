@@ -25,36 +25,36 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-        try {
-            const response = await axios.post(
-                "http://localhost:5264/api/accounts/login",
-                {
-                    email: email,
-                    password: password,
-                }
-            );
+      try {
+        const response = await axios.post(
+          "http://localhost:5264/api/accounts/login",
+          {
+            email: email,
+            password: password,
+          }
+        );
 
-            if (response.status === 200) {
-                const { userEmail, userID, role } = response.data; // Get role from response
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify({ userEmail, userID, role }) // Store role in local storage
-                );
-                setSuccessMessage("Login successful!");
-                setEmail("");
-                setPassword("");
-                setErrors({});
-                navigate("/home");
-            }
-        } catch (error) {
-            if (error.response) {
-                setServerError(error.response.data.message);
-            } else {
-                setServerError("An error occurred. Please try again.");
-            }
+        if (response.status === 200) {
+          const { userEmail, userID, role } = response.data;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ userEmail, userID, role }) // Store role in local storage
+          );
+          setSuccessMessage("Login successful!");
+          setEmail("");
+          setPassword("");
+          setErrors({});
+          navigate("/home");
         }
+      } catch (error) {
+        if (error.response) {
+          setServerError(error.response.data.message);
+        } else {
+          setServerError("An error occurred. Please try again.");
+        }
+      }
     }
-};
+  };
 
   return (
     <div className={styles.loginContainer}>
@@ -70,7 +70,6 @@ const Login = () => {
         )}
         {serverError && <p className={styles.errorMessage}>{serverError}</p>}
 
-        {/* Form needs to be inside the div */}
         <form onSubmit={handleLogin}>
           <div className={styles.Group}>
             <FontAwesomeIcon icon={faUser} className={styles.icon} />
@@ -96,7 +95,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Forgot Password and Login button inside the form */}
           <div className={styles.forgotPasswordAndButton}>
             <Link to="/email" className={styles.forgotPassword}>
               Forgot Password?
@@ -105,22 +103,22 @@ const Login = () => {
               Login
             </button>
           </div>
-        </form> {/* Closing form here */}
-
+        </form>
       </div>
 
       <div className={styles.rightSide}>
         <div className={styles.welcomeSection}>
           <h1 className={styles.welcomeText}>Hello and welcome!</h1>
           <p className={styles.welcomeSubtext}>
-		  If you're new, take a moment to create an account and unlock all the amazing features we have to offer.
+            If you're new, take a moment to create an account and unlock all the
+            amazing features we have to offer.
           </p>
           <p>
             Click{" "}
             <Link to="/register" className={styles.signUpLink}>
               HERE
             </Link>
-			to register{" "}
+            to register{" "}
           </p>
         </div>
       </div>
