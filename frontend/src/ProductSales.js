@@ -3,7 +3,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./ProductSales.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import {
   LineChart,
   Line,
@@ -15,26 +15,13 @@ import {
 } from "recharts";
 
 const ProductSales = () => {
-  const { productId } = useParams(); // Get the productId from the route
+  const { productId } = useParams();
   const location = useLocation();
   const { image, description, salePrice } = location.state || {};
   const [salesData, setSalesData] = useState([]);
   const [chartData, setChartData] = useState([]);
   const conversionRate = 18;
-  const itemsPerPage = 10; // Set items per page
-  const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = Math.ceil(salesData.length / itemsPerPage);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const paginatedData = salesData.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
-
-  // Get user role from local storage
   const user = JSON.parse(localStorage.getItem("user"));
   const userRole = user?.role;
 
@@ -51,10 +38,10 @@ const ProductSales = () => {
         setSalesData(response.data);
         // Prepare chart data
         const preparedChartData = response.data.map((sale) => ({
-          date: new Date(sale.saleDate).toLocaleDateString(), // Format date
+          date: new Date(sale.saleDate).toLocaleDateString(),
           saleQty: sale.saleQty,
         }));
-        setChartData(preparedChartData); // Set the chart data state
+        setChartData(preparedChartData);
       } catch (error) {
         console.error("Error fetching product sales data:", error);
       }
@@ -91,11 +78,23 @@ const ProductSales = () => {
           </p>
         </div>
       )}
+      
+        <div className={styles.cardMoney}>
+          <p className={styles.cardTitle}>Total Sales</p>
+          <p className={styles.cardValue}>
+            R{(totalSalePrice * conversionRate).toFixed(2)}
+          </p>
+        </div>
+        <div className={styles.card}>
+          <p className={styles.cardTitle}>Total Quantity Sold</p>
+          <p className={styles.cardValue}>{totalSaleQuantity}</p>
+        </div>
+      
       <table className={styles.salesTable}>
         <thead>
           <tr>
             {userRole === "manager" && <th>Sale Quantity</th>}
-            {userRole === "manager" && <th>Sale Date</th>}
+            <th>Sale Date</th>
             <th>Sale Price</th>
           </tr>
         </thead>
@@ -103,52 +102,19 @@ const ProductSales = () => {
           {salesData.map((sale) => (
             <tr key={sale.saleId}>
               {userRole === "manager" && <td>{sale.saleQty}</td>}
-              {userRole === "manager" && (
-                <td>{new Date(sale.saleDate).toLocaleDateString()}</td>
-              )}
-              <td>
-                <strong>R{(sale.salePrice * conversionRate).toFixed(2)}</strong>
-              </td>
+              <td>{new Date(sale.saleDate).toLocaleDateString()}</td>
+              <td>R{(sale.salePrice * conversionRate).toFixed(2)}</td>
             </tr>
           ))}
-          <tr>
-            <td colSpan={userRole === "manager" ? 2 : 1}>
-              <strong>Total:</strong>
-            </td>
-            {userRole === "manager" && (
-              <td>
-                <strong>R{(totalSalePrice * conversionRate).toFixed(2)}</strong>
-              </td>
-            )}
-            {userRole === "manager" && (
-              <td>
-                <strong>{totalSaleQuantity}</strong>
-              </td>
-            )}
-            {userRole === "manager" && <td></td>}
-          </tr>
-          {userRole !== "manager" && (
-            <tr>
-              <td colSpan="2">
-                <strong>Total Sale Price:</strong> R
-                {(totalSalePrice * conversionRate).toFixed(2)} |{" "}
-                <strong>Total Sale Quantity:</strong> {totalSaleQuantity}
-              </td>
-            </tr>
-          )}
         </tbody>
       </table>
-			<div>
-      
-    </div>
-      {/* Line Chart for Sales Data */}
       <div className={styles.chartContainer}>
         <h3>Sales Quantity Over Time</h3>
         <LineChart
           width={600}
           height={300}
           data={chartData}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
