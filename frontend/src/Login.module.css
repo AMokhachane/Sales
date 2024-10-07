@@ -4,6 +4,9 @@
 	background-color: #fff;
   }
   
+	.errorMessage{
+		color: red;
+	}
   .left {
 	width: 65%;
 	background-color: #fff;

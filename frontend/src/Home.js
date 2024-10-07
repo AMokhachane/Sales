@@ -5,7 +5,7 @@ import ProductCSS from "./Product.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAppleAlt, faUser, faSignOutAlt, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
-const Product = () => {
+const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -281,4 +281,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Home;

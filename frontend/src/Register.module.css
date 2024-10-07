@@ -33,13 +33,14 @@
 }
 
 .registerButton {
-    width: 100%; 
+    width: 100px; 
     height: 37px;
     background-color: #20682b;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+		margin-left: 300px;
 }
 
 .registerButton:hover {
@@ -72,7 +73,7 @@
     margin-bottom: 20px;
 }
 
-.signUpLink {
+.LoginLink {
     color: white;
     text-decoration: underline;
     cursor: pointer;
@@ -106,4 +107,8 @@
 
 .hiddenRole {
 	display: none;
+}
+
+.errorMessage{
+	color: red;
 }

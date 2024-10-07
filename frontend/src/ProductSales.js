@@ -62,7 +62,7 @@ const ProductSales = () => {
 
   return (
     <div className={styles.salesContainer}>
-      <div className={styles.backButtonContainer}>
+				<div className={styles.backButtonContainer}>
         <button onClick={() => navigate("/home")} className={styles.backButton}>
           <FontAwesomeIcon icon={faArrowLeft} className={styles.arrowIcon} />
           Back to Home

@@ -3,7 +3,6 @@ import styles from "./Email.module.css";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
-
 import axios from "axios";
 
 const Email = () => {
@@ -27,7 +26,7 @@ const Email = () => {
         "http://localhost:5264/api/accounts/forgotpassword",
         { email }
       );
-      setSuccessMessage(response.data.message);
+      setSuccessMessage(response.data.message); //Sends an email with a change password link
 
       setTimeout(() => {
         navigate("/");
@@ -57,12 +56,12 @@ const Email = () => {
               type="email"
               className={styles.inputField}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)} //Email address that will receive the reset link
               required
             />
           </div>
           <button type="submit" className={styles.resetButton}>
-            Send Reset Link
+            Submit
           </button>
         </form>
       </div>
