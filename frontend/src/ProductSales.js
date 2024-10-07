@@ -3,16 +3,8 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./ProductSales.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faDollarSign } from "@fortawesome/free-solid-svg-icons";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  Legend,
-} from "recharts";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {LineChart,Line,XAxis,YAxis,Tooltip,CartesianGrid,Legend,Label} from "recharts";
 
 const ProductSales = () => {
   const { productId } = useParams();
@@ -28,6 +20,12 @@ const ProductSales = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (userRole !== "manager") {
+      navigate("/home"); //It doesn't show the sales history if user is not a manager
+    }
+  }, [userRole, navigate]);
+
+  useEffect(() => {
     const fetchSalesData = async () => {
       try {
         const response = await axios.get(`/product-sales`, {
@@ -36,9 +34,8 @@ const ProductSales = () => {
           },
         });
         setSalesData(response.data);
-        // Prepare chart data
         const preparedChartData = response.data.map((sale) => ({
-          date: new Date(sale.saleDate).toLocaleDateString(),
+          date: new Date(sale.saleDate).toLocaleDateString(), //Getting the sales history from the privided Singular API
           saleQty: sale.saleQty,
         }));
         setChartData(preparedChartData);
@@ -49,7 +46,7 @@ const ProductSales = () => {
 
     fetchSalesData();
   }, [productId]);
-
+//Sales summary
   const totalSalePrice = salesData.reduce(
     (total, sale) => total + sale.salePrice,
     0
@@ -58,6 +55,10 @@ const ProductSales = () => {
     (total, sale) => total + sale.saleQty,
     0
   );
+
+	const CustomLegend = () => {
+		return null; //Hides the information I do not want to display
+	};
 
   return (
     <div className={styles.salesContainer}>
@@ -78,18 +79,18 @@ const ProductSales = () => {
           </p>
         </div>
       )}
-      
-        <div className={styles.cardMoney}>
-          <p className={styles.cardTitle}>Total Sales</p>
-          <p className={styles.cardValue}>
-            R{(totalSalePrice * conversionRate).toFixed(2)}
-          </p>
-        </div>
-        <div className={styles.card}>
-          <p className={styles.cardTitle}>Total Quantity Sold</p>
-          <p className={styles.cardValue}>{totalSaleQuantity}</p>
-        </div>
-      
+
+      <div className={styles.cardMoney}>
+        <p className={styles.cardTitle}>Total Sales</p>
+        <p className={styles.cardValue}>
+          R{(totalSalePrice * conversionRate).toFixed(2)}
+        </p>
+      </div>
+      <div className={styles.card}>
+        <p className={styles.cardTitle}>Total Quantity Sold</p>
+        <p className={styles.cardValue}>{totalSaleQuantity}</p>
+      </div>
+
       <table className={styles.salesTable}>
         <thead>
           <tr>
@@ -117,15 +118,19 @@ const ProductSales = () => {
           margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
+          <XAxis dataKey="date">
+            <Label value="Time" offset={-5} position="insideBottom" />
+          </XAxis>
+          <YAxis>
+            <Label value="Quantity" angle={-90} position="insideLeft" />
+          </YAxis>
           <Tooltip />
-          <Legend />
+          <Legend content={<CustomLegend />} />
           <Line
             type="monotone"
             dataKey="saleQty"
             stroke="#8884d8"
-            activeDot={{ r: 8 }}
+            activeDot={{ r: 8 }} //This part of the data is hidden
           />
         </LineChart>
       </div>

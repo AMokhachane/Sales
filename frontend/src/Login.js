@@ -9,6 +9,7 @@ import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isManager, setIsManager] = useState(false); //"Login as Manager"
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [serverError, setServerError] = useState("");
@@ -31,6 +32,7 @@ const Login = () => {
           {
             email: email,
             password: password,
+            role: isManager ? "manager" : "normal user", 
           }
         );
 
@@ -90,12 +92,11 @@ const Login = () => {
               className={styles.inputField}
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)} 
               required
             />
           </div>
-
-          <div className={styles.forgotPasswordAndButton}>
+						 <div className={styles.forgotPasswordAndButton}>
             <Link to="/email" className={styles.forgotPassword}>
               Forgot Password?
             </Link>

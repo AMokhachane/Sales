@@ -9,7 +9,7 @@
 }
 
 .leftSide {
-    background: linear-gradient(135deg, #c2f5b2, #4CAF50, #393a01);
+    background: linear-gradient(135deg, #c2f5b2, #4CAF50, #013a19);
     padding: 10px; 
     border-radius: 10px; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -17,7 +17,6 @@
     position: absolute; 
     left: 20px; 
     height: 100%;
-    
 }
 
 .left {
@@ -28,7 +27,6 @@
     background-color: #d8f3dc; 
     height: 100vh;
     justify-content: flex-start; 
-   
 }
 
 .title {
@@ -39,7 +37,7 @@
 
 .filterContainer {
 	margin-left: 260px;
-	margin-top: -110px; /* Move up with a negative margin */
+	margin-top: -110px;
 	margin-bottom: 10px; 
 }
 
@@ -52,7 +50,6 @@
 .searchContainer{
     margin-top: 0px;
     margin-right: 400px;
-    
 }
 
 .filterTitle {
@@ -119,20 +116,33 @@
 }
 
 .productDescription {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px; 
+	font-size: 14px; 
+	margin-bottom: 4px; 
+	font-family: 'Roboto', sans-serif; 
+	text-transform: uppercase; 
+	letter-spacing: 0.5px; 
+	font-weight: bold;
+	color: #030303;	
 }
 
 .productCategory {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 10px; 
+	font-size: 14px; 
+	font-weight: bold;
+	color: #030303;
+	margin-bottom: 4px; 
+	font-family: 'Roboto', sans-serif; 
+	text-transform: uppercase; 
+	letter-spacing: 0.5px; 
 }
 
 .productPrice {
     font-weight: bold;
-    color: #4CAF50; 
+    color: #030303;
+		font-size: 14px; 
+		margin-bottom: 6px;
+		font-family: 'Roboto', sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.5px; 
 }
 
 .pagination {
@@ -173,7 +183,6 @@
     font-size: 16px; 
     width: 300px; 
 }
-
 .logo {
     display: flex;
     align-items: center;
@@ -200,11 +209,9 @@
 }
 
 .userInfo {
-    
-    flex-direction: row; 
+		flex-direction: row; 
     align-items: start; 
-    
-  }
+	}
 
   .UserContainer {
     background: linear-gradient(135deg, #013a19, #4CAF50, #c2f5b2);
@@ -244,14 +251,14 @@
   }
   
 	.userIcon {
-    width: 40%; /* Adjust as needed */
-    height: auto; /* Keep aspect ratio */
-    border-radius: 50%; /* Make it round */
-    background-color: rgb(200, 245, 196); /* White background */
-    padding: 10px; /* Add padding for space around the icon */
-    display: flex; /* Center the icon within the background */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    width: 40%; 
+    height: auto; 
+    border-radius: 50%; 
+    background-color: rgb(200, 245, 196);
+    padding: 10px; 
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
 		color: 013a19;
 }
 
@@ -300,27 +307,26 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: #f8f8f8; /* Light background for contrast */
-		border: 1px solid #ccc; /* Border around the cart */
-		border-radius: 8px; /* Rounded corners */
+		background-color: #f8f8f8; 
+		border: 1px solid #ccc;
+		border-radius: 8px; 
 		padding: 10px;
-		margin: 20px 0; /* Space above and below */
+		margin: 20px 0; 
 	}
 	
 	.cartCount {
-		margin-left: 10px; /* Space between icon and count */
+		margin-left: 10px; 
 		font-weight: bold;
-		font-size: 1.2em; /* Slightly larger font size */
+		font-size: 1.2em; 
 	}
 	
 	.totalItemsText {
-		margin-left: 20px; /* Space between count and text */
-		font-size: 1em; /* Font size for the total items text */
-		color: #555; /* Slightly darker color for contrast */
+		margin-left: 20px; 
+		font-size: 1em; 
+		color: #555; 
 	}
 	
 	.addToCartButton{
-
 		background-color: #4CAF50; 
 		color: white; 
 		border: none; 
@@ -342,5 +348,36 @@
 	}
 	
 	.goToCartButton:hover {
-		background-color: #45a049; /* Darker green on hover */
+		background-color: #45a049;
 	}
+	.cartItem {
+		padding: 8px; 
+		border-bottom: 1px solid #eee;
+		width: 100%; 
+		 
+		
+	}
+	
+	.emptyCartMessage {
+		padding: 8px; 
+		text-align: center; 
+	}
+	.cartContainer {
+		position: relative; 
+	}
+	
+	.basketInfo {
+		display: flex; 
+		align-items: center; 
+	}
+	
+	.cartDropdown {
+		position: absolute; 
+		top: 100%; 
+		left: 0; 
+		background: white; 
+		border: 1px solid #ccc;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+		z-index: 100; 
+	}
+	

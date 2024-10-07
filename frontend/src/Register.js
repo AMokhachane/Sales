@@ -84,19 +84,19 @@ const Register = () => {
                             required
                         />
                     </div>
-                    <div className={styles.Group}>
-                        <label htmlFor="role" className={styles.roleLabel}>Select Role:</label>
-                        <select
-                            id="role"
-                            className={styles.inputField}
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            required
-                        >
-                            <option value="normal user">Normal User</option>
-                            <option value="manager">Manager</option>
-                        </select>
-                    </div>
+                    <div className={`${styles.Group} ${styles.hiddenRole}`}>
+    <label htmlFor="role" className={styles.roleLabel}>Select Role:</label>
+    <select
+        id="role"
+        className={styles.inputField}
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        required
+    >
+        <option value="normal user">Normal User</option>
+        <option value="manager">Manager</option>
+    </select>
+</div>
                     <button type="submit" className={styles.registerButton}>
                         Register
                     </button>

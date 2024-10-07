@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import ProductCSS from "./Product.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAppleAlt, faUser, faSignOutAlt, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -12,8 +12,9 @@ const Product = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-	const [cart, setCart] = useState([]);
-	const conversionRate = 18; // Example conversion rate: 1 USD = 18 Rands
+  const [cart, setCart] = useState([]);
+  const conversionRate = 18; //Converts USD to South African rands
+	const [isCartOpen, setIsCartOpen] = useState(false);
   const productsPerPage = 8;
 
   const navigate = useNavigate();
@@ -22,13 +23,15 @@ const Product = () => {
     setCart((prevCart) => [...prevCart, product]);
   };
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/products");
-        setProducts(response.data);
+        const response = await axios.get("/products"); //Getting products from the Singular API that was provided to me
+        const productsWithCartStatus = response.data.map((product) => ({
+          ...product,
+          isInCart: false,
+        }));
+        setProducts(productsWithCartStatus);
 
         const uniqueCategories = [
           ...new Set(response.data.map((product) => product.category)),
@@ -42,9 +45,22 @@ const Product = () => {
     fetchData();
   }, []);
 
+  const handleAddToCartClick = (product) => {
+    if (!product.isInCart) {
+      addToCart(product);
+      setProducts((prevProducts) =>
+        prevProducts.map((p) =>
+          p.id === product.id ? { ...p, isInCart: true } : p
+        )
+      );
+    } else {
+      navigate("/home");
+    }
+  };
+
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
-      selectedCategory === "" || product.category === selectedCategory;
+      selectedCategory === "" || product.category === selectedCategory; //Filter by category, filter by price, filter by search bar using the product name
     const matchesPrice =
       selectedPriceRange === "" ||
       (selectedPriceRange === "below10" && product.salePrice < 10) ||
@@ -71,6 +87,10 @@ const Product = () => {
     setCurrentPage(pageNumber);
   };
 
+	const toggleCartDropdown = () => {
+    setIsCartOpen((prevState) => !prevState);
+  };
+
   const handleProductClick = (product) => {
     navigate(`/product-sales/${product.id}`, {
       state: {
@@ -78,13 +98,11 @@ const Product = () => {
         description: product.description,
         salePrice: product.salePrice,
       },
-    });
+    }); //For viewing the sales history
   };
 
-  // Retrieve user info from local storage
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userRole = user?.role || "Guest";
-  const userName = user?.userName || "User";
+  const user = JSON.parse(localStorage.getItem("user"));  // Retrieve user info from local storage
+  const userRole = user?.role || "Normal User";
   const userEmail = user?.userEmail || "user@example.com";
 
   return (
@@ -128,20 +146,19 @@ const Product = () => {
               />
               <h3 className={ProductCSS.productName}>{product.name}</h3>
               <p className={ProductCSS.productDescription}>
-                Description: {product.description}
+                 {product.description}
               </p>
               <p className={ProductCSS.productCategory}>
                 Category: {product.category}
               </p>
-							{/* converting the dollar to south african rands */}
-              <p className={ProductCSS.productPrice}> 
-  Sale Price: R{(product.salePrice * conversionRate).toFixed(2)} 
-</p>
+              <p className={ProductCSS.productPrice}>
+                Sale Price: R{(product.salePrice * conversionRate).toFixed(2)}
+              </p>
               <button
                 className={ProductCSS.addToCartButton}
-                onClick={() => addToCart(product)}
+                onClick={() => handleAddToCartClick(product)}
               >
-                Add to Cart
+                {product.isInCart ? "View Cart" : "Add to Cart"}
               </button>
             </div>
           ))}
@@ -169,21 +186,38 @@ const Product = () => {
           </div>
           <span className={ProductCSS.boldText}>FRESH FRUITS & VEGGIES</span>
         </div>
-        
-        
-        <div className={ProductCSS.cartContainer}>
-  <FontAwesomeIcon icon={faShoppingCart} size="2x" />
-  <p className={ProductCSS.totalItemsText}>Total items in cart: {cart.length}</p>
-  <button
-    className={ProductCSS.goToCartButton}
-    onClick={() => navigate("/cart")}
-  >
-    Go to Cart
-  </button>
+
+    {/* Cart Section */}
+<div className={ProductCSS.cartContainer}>
+  <div className={ProductCSS.basketInfo}>
+    <FontAwesomeIcon icon={faShoppingCart} size="2x" />
+    <p className={ProductCSS.totalItemsText}>
+      Total items in cart: {cart.length}
+    </p>
+    <button
+      className={ProductCSS.goToCartButton}
+      onClick={toggleCartDropdown}
+    >
+      {isCartOpen ? "Hide Cart" : "View Cart"}
+    </button>
+  </div>
+  {isCartOpen && (
+    <div className={ProductCSS.cartDropdown}>
+      {cart.length > 0 ? (
+        cart.map((item, index) => (
+          <div key={index} className={ProductCSS.cartItem}>
+            <p>{item.name}</p>
+						<p>{item.description}</p> 
+            <p>R{(item.salePrice * conversionRate).toFixed(2)}</p>
+            
+          </div>
+        ))
+      ) : (
+        <p className={ProductCSS.emptyCartMessage}>Cart is empty</p>
+      )}
+    </div>
+  )}
 </div>
-
-        
-
         <div className={ProductCSS.priceContainer}>
           <h3 className={ProductCSS.filterTitle}>Filter by Price</h3>
           <select
@@ -235,8 +269,8 @@ const Product = () => {
         <button
           className={ProductCSS.logoutButton}
           onClick={() => {
-            localStorage.removeItem("user"); 
-            navigate("/"); 
+            localStorage.removeItem("user");
+            navigate("/");
           }}
         >
           <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: "8px" }} />
