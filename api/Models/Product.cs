@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace api.Models
 {
     public class Product
@@ -12,8 +7,8 @@ namespace api.Models
         public string Url { get; set; } = string.Empty;
         public List<Category> Categories { get; set; } = new List<Category>();
         public List<Sale> Sales { get; set; } = new List<Sale>();
-        public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public string? AppUserId { get; set; }
+        public AppUser? AppUser { get; set; }
 
     }
 }
