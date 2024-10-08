@@ -1,10 +1,6 @@
 using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using api.Models;
 using api.Data;
 using api.Interfaces;
@@ -69,13 +65,13 @@ namespace api.Controllers
                 }
 
 
-                string role = userDto.Role;
-                if (!await roleManager.RoleExistsAsync(role))
-                {
+                // string role = userDto.Role ?? "normal user"; //Setting all roles for new users to be normal user
+                // if (!await roleManager.RoleExistsAsync(role))
+                // {
 
-                    await roleManager.CreateAsync(new IdentityRole(role));
-                }
-                await userManager.AddToRoleAsync(newUser, role);
+                //     await roleManager.CreateAsync(new IdentityRole(role));
+                // }
+                // await userManager.AddToRoleAsync(newUser, role);
 
 
                 string confirmationLink = await GenerateEmailConfirmationLink(newUser);
@@ -95,43 +91,33 @@ namespace api.Controllers
         }
 
 
-        private async Task<string> GenerateEmailConfirmationLink(AppUser newUser)
+        private async Task<string> GenerateEmailConfirmationLink(AppUser newUser) //The email Template/message that the user will receive
         {
             var token = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
             var encodedToken = WebUtility.UrlEncode(token);
             var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { email = newUser.Email, token = encodedToken }, Request.Scheme);
+						 // Log the generated confirmation link
+    logger.LogInformation("Generated confirmation link: {Link}", confirmationLink);
             return confirmationLink;
         }
 
         private async Task SendConfirmationEmail(string email, string confirmationLink)
         {
+					var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "ConfirmationEmailTemplate.html");
+					string confirmationEmailTemplate;
+					try
+					{
+						confirmationEmailTemplate = await System.IO.File.ReadAllTextAsync(templatePath);
+					}
+					catch (Exception ex)
+					{
+						logger.LogError(ex, "Error reading email template.");
+						throw new Exception("Email template could not be loaded.");
+					}
 
-
-            string confirmationEmailTemplate = $@"
-    <h1>Welcome to FRESH FRUITS & VEGGIES</h1>
-    <h3>Hi</h3>
-    
-    <div style='padding: 0 0 10px;'>
-        <h4>Please click the link below to confirm your email:</h4>
-        <a href='{confirmationLink}'
-        style='
-            padding: 10px 15px;
-            border-radius: 4px;
-            margin: 10px auto;
-            background-color: #20682b;
-            color: #black; 
-            height: 40px;
-            text-decoration: none;'
-        >Confirm Account
-        </a>
-    </div>
-    <p>This link will expire in 24 hours. If you encounter any issues, please reach out to our support team.</p>
-    <p>Thank you,</p>
-    <p>Best regards,</p>
-    <p>The FRESH FRUITS & VEGGIES Team</p>";
-
-            await emailSender.SendEmailAsync(email, "Email Confirmation", confirmationEmailTemplate, true);
-        }
+					confirmationEmailTemplate = confirmationEmailTemplate.Replace("{{confirmationLink}}", confirmationLink);
+					await emailSender.SendEmailAsync(email, "Email Confirmation", confirmationEmailTemplate, true);
+				}
 
         //confirm email
         [HttpGet("confirmemail")]

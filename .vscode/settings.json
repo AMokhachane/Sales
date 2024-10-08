@@ -10,4 +10,7 @@
 	  "prettier.tabWidth": 2,
 	},
 	"csharp.format.enable": true,
+	"cSpell.words": [
+		"Dtos"
+	],
   }

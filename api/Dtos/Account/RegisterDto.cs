@@ -17,8 +17,5 @@ namespace api.Dtos.Account
 
         [Required]
         public string? Password { get; set; }
-
-        [Required]
-        public string? Role { get; set; } //Specify the role
     }
 }
