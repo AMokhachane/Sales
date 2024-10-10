@@ -12,16 +12,16 @@ const ProductSales = () => {
   const { image, description, salePrice } = location.state || {};
   const [salesData, setSalesData] = useState([]);
   const [chartData, setChartData] = useState([]);
-  const conversionRate = 18;
+  const conversionRate = 18; //Converting Dollars to South African rands
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user")); //I used local storage to see the role of the person logged in
   const userRole = user?.role;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userRole !== "manager") {
-      navigate("/home"); //It doesn't show the sales history if user is not a manager
+      navigate("/home"); //After checking the roles it displays this page if you are a manager, if not you will be redirected to home page
     }
   }, [userRole, navigate]);
 
@@ -35,7 +35,7 @@ const ProductSales = () => {
         });
         setSalesData(response.data);
         const preparedChartData = response.data.map((sale) => ({
-          date: new Date(sale.saleDate).toLocaleDateString(), //Getting the sales history from the privided Singular API
+          date: new Date(sale.saleDate).toLocaleDateString(), //Getting the sales history from the provided Singular API
           saleQty: sale.saleQty,
         }));
         setChartData(preparedChartData);
@@ -73,8 +73,9 @@ const ProductSales = () => {
           <img src={image} alt={description} className={styles.productImage} />
           <p>{description}</p>
           <p>
+						{/* added this to fix the prices to two decimal place */}
             <strong>
-              Sale Price: R{(salePrice * conversionRate).toFixed(2)}
+              Sale Price: R{(salePrice * conversionRate).toFixed(2)} 
             </strong>
           </p>
         </div>
@@ -109,6 +110,7 @@ const ProductSales = () => {
           ))}
         </tbody>
       </table>
+			{/* The graph of quantity over time */}
       <div className={styles.chartContainer}>
         <h3>Sales Quantity Over Time</h3>
         <LineChart

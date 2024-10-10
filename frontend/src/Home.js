@@ -98,7 +98,7 @@ const Home = () => {
         description: product.description,
         salePrice: product.salePrice,
       },
-    }); //For viewing the sales history
+    }); //For viewing the sales history on click of each product
   };
 
   const user = JSON.parse(localStorage.getItem("user"));  // Retrieve user info from local storage

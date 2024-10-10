@@ -64,16 +64,6 @@ namespace api.Controllers
                     return BadRequest(new { errors = errorMessages });
                 }
 
-
-                // string role = userDto.Role ?? "normal user"; //Setting all roles for new users to be normal user
-                // if (!await roleManager.RoleExistsAsync(role))
-                // {
-
-                //     await roleManager.CreateAsync(new IdentityRole(role));
-                // }
-                // await userManager.AddToRoleAsync(newUser, role);
-
-
                 string confirmationLink = await GenerateEmailConfirmationLink(newUser);
                 await SendConfirmationEmail(newUser.Email, confirmationLink);
 
